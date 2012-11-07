@@ -1,5 +1,5 @@
 Package: illuminaio
-Version: 0.1.1
+Version: 0.1.2
 Title: Parsing Illumina microarray output files
 Description: Tools for parsing Illumina's microarray output files, including IDAT.	
 Author: Kasper Daniel Hansen, Matt Ritchie

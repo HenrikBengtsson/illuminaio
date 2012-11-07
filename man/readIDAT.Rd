@@ -38,8 +38,8 @@ readIDAT(file)
   genotyping BeadChips. Bioinformatics. 2009 Oct 1;25(19):2621-3.
 }
 
-\author{Keith Baggerly, with modifications by Matt Ritchie and Kasper
-  Daniel Hansen}
+\author{Keith Baggerly, with modifications by Matt Ritchie, Henrik
+  Bengstsson and Kasper Daniel Hansen}
 
 \examples{
 #idatdata = readIDAT("4019585367_A_Grn.idat")

@@ -1,0 +1,104 @@
+
+R version 2.15.2 Patched (2012-11-04 r61084) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin12.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(illuminaio)
+> library(minfiData)
+Loading required package: minfi
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following object(s) are masked from ‘package:stats’:
+
+    xtabs
+
+The following object(s) are masked from ‘package:base’:
+
+    anyDuplicated, cbind, colnames, duplicated, eval, Filter, Find,
+    get, intersect, lapply, Map, mapply, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, table, tapply, union, unique
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: lattice
+Loading required package: reshape
+Loading required package: plyr
+
+Attaching package: ‘reshape’
+
+The following object(s) are masked from ‘package:plyr’:
+
+    rename, round_any
+
+Loading required package: GenomicRanges
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object(s) are masked from ‘package:reshape’:
+
+    expand, rename
+
+The following object(s) are masked from ‘package:plyr’:
+
+    compact, desc, rename
+
+Loading required package: Biostrings
+Loading package bit 1.1-9
+package:bit (c) 2008-2012 Jens Oehlschlaegel (GPL-2)
+creators: bit bitwhich
+coercion: as.logical as.integer as.bit as.bitwhich which
+operator: ! & | xor != ==
+querying: print length any all min max range sum summary
+bit access: length<- [ [<- [[ [[<-
+for more help type ?bit
+Loading package ff2.2-9
+- getOption("fftempdir")=="/var/folders/81/cmtf_71d1j35y58x5j1jvnz40000gn/T//Rtmp5RHAkn"
+
+- getOption("ffextension")=="ff"
+
+- getOption("ffdrop")==TRUE
+
+- getOption("fffinonexit")==TRUE
+
+- getOption("ffpagesize")==65536
+
+- getOption("ffcaching")=="mmnoflush"  -- consider "ffeachflush" if your system stalls on large writes
+
+- getOption("ffbatchbytes")==16777216 -- consider a different value for tuning your system
+
+- getOption("ffmaxbytes")==536870912 -- consider a different value for tuning your system
+
+Loading required package: IlluminaHumanMethylation450kmanifest
+> 
+> idatDir <- system.file("extdata", "5723646052",  package = "minfiData")
+> idatFile <- file.path(idatDir, "5723646052_R02C02_Grn.idat")
+> idat.450k <- illuminaio::readIDAT(idatFile)
+> save(idat.450k, file = "../unitTests/idat.450k.rda", compress = "xz")
+> 
+> proc.time()
+   user  system elapsed 
+ 21.625   0.327  21.941 

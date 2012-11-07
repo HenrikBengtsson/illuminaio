@@ -11,11 +11,11 @@
 }
 
 \usage{
-readIDAT(file)
+readIDAT(filename)
 }
 
 \arguments{
-  \item{file}{character string specifying idat file to be read in}
+  \item{filename}{character string specifying idat file to be read in}
 }
 
 \details{
@@ -23,7 +23,7 @@ readIDAT(file)
   This function returns a list containing summarised intensities and other
   information extracted from a single .idat file.
 
-  Thanks to Keith Baggerly who providing this code.
+  Thanks to Keith Baggerly for providing the first version of this code.
 }
 
 \value{
@@ -42,9 +42,12 @@ readIDAT(file)
   Bengstsson and Kasper Daniel Hansen}
 
 \examples{
-#idatdata = readIDAT("4019585367_A_Grn.idat")
-#names(idatdata
-#idatdata$Quants[1:5,]
+if(require(minfiData)) {
+  idatDir <- system.file("extdata", "5723646052",  package = "minfiData")
+  idatFile <- file.path(idatDir, "5723646052_R02C02_Grn.idat")
+  idat <- readIDAT(idatFile)
+  names(idat)
+  idat$Quants[1:5,]
+}
 }
 \keyword{IO}
-

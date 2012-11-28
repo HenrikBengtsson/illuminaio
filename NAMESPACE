@@ -1,1 +1,1 @@
-export(readIDAT)
+export(readIDAT, readBPM)

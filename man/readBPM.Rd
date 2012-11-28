@@ -13,12 +13,12 @@ readBPM(file)
 }
 
 \arguments{
-  \item{file}{character string specifying idat file to be read in}
+  \item{file}{character string specifying BPM file to be read in}
 }
 
 \value{
   A list.
 }
 
-\author{Henrik Bengstsson}
+\author{Henrik Bengtsson}
 \keyword{IO}

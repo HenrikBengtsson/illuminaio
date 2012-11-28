@@ -5,7 +5,7 @@
 \title{Low-level function to read IDAT files}
 
 \description{ Reads intensity information for each bead type from a
-  single IDAT file from Infinium II platforms.
+              single IDAT file for Infinium II or Infinium HD platforms.
 }
 
 \usage{
@@ -27,11 +27,11 @@ readIDAT(file)
   encryption to store data, and this function does not read encrypted
   IDAT files.  This is the formated usually produced by Illumina
   expression arrays.  The other version is unencrypted files, which this
-  function reads.  This includes data from SNP arrays and Methylation
+  function reads.  This includes data from SNP arrays and DNA methylation
   arrays.
 
   Search the Bioconductor archives for hints on how to read encrypted
-  IDATs.  We are considering merging this code into this package.
+  IDATs.  We are considering merging that code into this package.
 }
 
 \value{
@@ -47,7 +47,7 @@ readIDAT(file)
 }
 
 \author{Keith Baggerly, with modifications by Matt Ritchie, Henrik
-  Bengstsson and Kasper Daniel Hansen}
+  Bengtsson and Kasper Daniel Hansen}
 
 \examples{
 if(require(minfiData)) {

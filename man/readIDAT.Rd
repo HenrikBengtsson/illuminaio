@@ -5,17 +5,15 @@
 \title{Low-level function to read IDAT files}
 
 \description{ Reads intensity information for each bead type from a
-  single IDAT file from Infinium II platforms.  The function does not
-  read encrypted IDAT files, typically produced by the Illumina gene
-  expression platforms.
+  single IDAT file from Infinium II platforms.
 }
 
 \usage{
-readIDAT(filename)
+readIDAT(file)
 }
 
 \arguments{
-  \item{filename}{character string specifying idat file to be read in}
+  \item{file}{character string specifying idat file to be read in.}
 }
 
 \details{
@@ -24,12 +22,22 @@ readIDAT(filename)
   information extracted from a single .idat file.
 
   Thanks to Keith Baggerly for providing the first version of this code.
+
+  There are two commonly encounted versions of IDAT.  One version uses
+  encryption to store data, and this function does not read encrypted
+  IDAT files.  This is the formated usually produced by Illumina
+  expression arrays.  The other version is unencrypted files, which this
+  function reads.  This includes data from SNP arrays and Methylation
+  arrays.
+
+  Search the Bioconductor archives for hints on how to read encrypted
+  IDATs.  We are considering merging this code into this package.
 }
 
 \value{
-  list which includes item \code{Quants} which contains average intensity (\code{Mean}),
-  number of beads (\code{NBeads}) and a measure of variability (\code{SD}) for
-  each bead type on the array.
+  A list which includes item \code{Quants} which contains average
+  intensity (\code{Mean}), number of beads (\code{NBeads}) and a measure
+  of variability (\code{SD}) for each bead type on the array.
 }
 
 \references{

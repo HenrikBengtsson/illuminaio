@@ -1,4 +1,4 @@
-readIDAT <- function(filename) {
+readIDAT <- function(file) {
     readByte <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=1, endian="little", signed=FALSE)
     }
@@ -31,10 +31,10 @@ readIDAT <- function(filename) {
         readChar(con, nchars=n)
     }
     
-    filename <- path.expand(filename)
-    fileSize <- file.info(filename)$size
+    file <- path.expand(file)
+    fileSize <- file.info(file)$size
 
-    con <- file(filename, "rb")
+    con <- file(file, "rb")
     on.exit({
         close(con)
     })

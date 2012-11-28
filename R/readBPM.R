@@ -4,7 +4,7 @@
 
      fileSize <- file.info(file)$size
 
-     tempCon <- file(file,"rb")
+     tempCon <- file(file, "rb")
 
      ## The first few bytes of the egtFile are some type of
      ## header, but there's no related byte offset information.

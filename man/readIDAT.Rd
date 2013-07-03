@@ -25,7 +25,7 @@ readIDAT(file)
 
   There are two commonly encounted versions of IDAT.  One version uses
   encryption to store data, and this function does not read encrypted
-  IDAT files.  This is the formated usually produced by Illumina
+  IDAT files.  This is the format usually produced by Illumina
   expression arrays.  The other version is unencrypted files, which this
   function reads.  This includes data from SNP arrays and DNA methylation
   arrays.

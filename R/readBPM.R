@@ -1,9 +1,8 @@
  readBPM <- function(file){
 
      ## Reads and parses Illumina BPM files
-
-     fileSize <- file.info(file)$size
-
+     
+     file <- path.expand(file)
      tempCon <- file(file, "rb")
 
      ## The first few bytes of the egtFile are some type of

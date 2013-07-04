@@ -50,9 +50,9 @@ readIDAT(file)
   Bengtsson and Kasper Daniel Hansen}
 
 \examples{
-if(require(minfiData)) {
-  idatDir <- system.file("extdata", "5723646052",  package = "minfiData")
-  idatFile <- file.path(idatDir, "5723646052_R02C02_Grn.idat")
+if(require(IlluminaDataTestFiles)) {
+  idatFile <- system.file("extdata", "idat", "4019585376_B_Red.idat",
+                          package = "IlluminaDataTestFiles")
   idat <- readIDAT(idatFile)
   names(idat)
   idat$Quants[1:5,]

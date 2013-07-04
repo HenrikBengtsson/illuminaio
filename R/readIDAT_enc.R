@@ -8,18 +8,9 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
     
     if(verbose) 
         message("Decrypting to XML")
-#    if(@HAVE_RPC_R@) {
-#        out <- .C("decryptGNU", as.character(file), as.character(tempFile), PACKAGE = "illuminaio");
-#    }
-#    else if (@HAVE_SSL_R@) {
-#        out <- .C("decryptSSL", as.character(file), as.character(tempFile), PACKAGE = "illuminaio");
-#    }
-#    else {
-#        stop("Required libraries not found during build")
-#    }
+
     out <- .C("decrypt", as.character(file), as.character(tempFile), PACKAGE = "illuminaio");
     
-
     if(verbose)
         message("Reading XML")
     
@@ -29,6 +20,9 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
     what = c(rep("numeric", 6), rep("integer", 4))
     res <- list()
 
+    ## if we've got the XML format with lots of short lines we're
+    ## going to find the lines that indicate the start of a new entry
+    ## and then build each block of data by concatanating the lines inbetween 
     if(length(r) > 100) {
 
         idx <- grep(" __", r)
@@ -57,9 +51,12 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
             
             file.remove(tf1, tf2)
         }
-    }
-    else {
-
+    } else {
+        ## if we've got one long line for all the data chunks then we split it
+        ## based on the position of the "__" indicating the data chunk names
+        ## then process each of those in turn
+        if(verbose) 
+            message("Example Found ", file)
         data <- strsplit(r[2], " __")[[1]]
         for(i in 2:length(data)) {
             tmp <- strsplit(data[[i]], "\\\"")[[1]]

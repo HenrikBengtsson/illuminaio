@@ -1,5 +1,5 @@
 timings_readIDAT <- function() {
-    cat("File 1 (50,000 beads, encrypted) ... ")
+    cat("File 1 (50,173 beads, encrypted) ... ")
     idatFile <- system.file("extdata", "idat", "4343238080_A_Grn.idat",
                             package = "IlluminaDataTestFiles")
     stime <- system.time({idat1 <- readIDAT_enc(idatFile)})[3]

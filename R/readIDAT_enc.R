@@ -18,7 +18,7 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
     file.remove(tempFile);   
 
     what = c(rep("numeric", 6), rep("integer", 4))
-    res <- list()
+    data <- list()
     
     tf <- tempfile(c("", ""));
 
@@ -52,18 +52,18 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
             write.table(file = tf[1], x = b64String, row.names = FALSE, col.names = FALSE, quote = FALSE)
             decode(input = tf[1], output = tf[2])
 
-            ## estimated number of bead-types (plus a fudge factor to be sure)
+            ## estimated number of bead-types (plus a small fudge factor to be sure)
             nDataPoints <- (3 * nchar(b64String) / 16) + 100
-            res[[name]] <- readBin(tf[2], what = what[i], size = 4, n = as.integer(nDataPoints))           
+            data[[name]] <- readBin(tf[2], what = what[i], size = 4, n = as.integer(nDataPoints))           
         }
     } else {
         ## if we've got one long line for all the data chunks then we split it
         ## based on the position of the "__" indicating the data chunk names
         ## then process each of those in turn
        
-        data <- strsplit(r[2], " __")[[1]]
-        for(i in 2:length(data)) {
-            tmp <- strsplit(data[[i]], "\\\"")[[1]]
+        dataChunks <- strsplit(r[2], " __")[[1]]
+        for(i in 2:length(dataChunks)) {
+            tmp <- strsplit(dataChunks[[i]], "\\\"")[[1]]
             name <- substr(tmp[1], 1, nchar(tmp[1]) - 1)
             b64String <- tmp[2]
 
@@ -71,9 +71,58 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
             decode(input = tf[1], output = tf[2])
 
             nDataPoints <- (3 * nchar(b64String) / 16) + 100
-            res[[name]] <- readBin(tf[2], what = what[i-1], size = 4, n = as.integer(nDataPoints))
+            data[[name]] <- readBin(tf[2], what = what[i-1], size = 4, n = as.integer(nDataPoints))
         }
     }
     file.remove(tf[1], tf[2])
-    return(as.data.frame(res))
+
+    ## grab some of the other information stored in the XML file
+    runInfo <- extractRunInfo(r)
+    chipInfo <- extractChipInfo(r)
+    
+    res <- list(
+            Barcode=chipInfo$BarCode,
+            Section=chipInfo$SectionLabel,
+            ChipType=chipInfo$SentrixFormat,
+            Data=as.data.frame(data),
+            RunInfo=runInfo
+           )
+    
+    return(res)
+    
 }
+
+extractRunInfo <- function(lines) {
+    
+    idx <- cbind(grep("<ProcessEntry>", lines), grep("</ProcessEntry>", lines))
+    
+    fields <- c("Name", "SoftwareApp", "Version", "Date", "Parameters")
+    res <- matrix(NA, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
+    
+    for(i in 1:nrow(idx)) {
+        entry <- lines[idx[i,1]:idx[i,2]]
+
+        for(f in fields) {
+            line <- entry[grep(paste("<", f, ">", sep = ""), entry)]
+            ## extract the string between tags
+            start <- gregexpr(">", line)[[1]][1] + 1
+            end <- gregexpr("<", line)[[1]][2] - 1
+            res[i, paste(f)] <- substring(line, start, end);
+        }
+    }
+    return(res)
+}
+        
+extractChipInfo <- function(lines) {
+    fields <- c("BarCode", "SentrixFormat", "SectionLabel")
+    res <- list();
+    for(f in fields) {
+        line <- lines[grep(paste("<", f, ">", sep = ""), lines)]
+        ## extract the string between tags
+        start <- gregexpr(">", line)[[1]][1] + 1
+        end <- gregexpr("<", line)[[1]][2] - 1
+        res[[ f ]] <- substring(line, start, end);
+    }
+    return(res)
+}
+    

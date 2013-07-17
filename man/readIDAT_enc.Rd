@@ -14,6 +14,9 @@
         Only really used for diagnostic purposes.}
 }
 \value{
-    Returns a data.frame containing the information stored in the idat file - namely summary data for each bead type on the array.
+    Returns a list containing the information stored in the idat file.  The summarized
+    intensity data for each bead type on the array is stored in the \code{Data}
+    slot.  Also included are details of scanning and decoding dates in the \code{RunInfo} slot.
 }
+
 \keyword{file}

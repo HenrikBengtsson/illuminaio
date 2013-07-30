@@ -20,5 +20,9 @@ readBPM(file)
   A list.
 }
 
-\author{Henrik Bengtsson}
+\author{
+  Originally created by Keith Baggerly in 2008.
+  Later included in the \pkg{crlmm} package.
+  Robustification and code cleanup by Henrik Bengtsson.
+}
 \keyword{IO}

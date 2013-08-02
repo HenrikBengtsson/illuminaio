@@ -3,9 +3,10 @@ Package: illuminaio
 
 Version: 0.3.5 [2013-08-02]
 o Cleaned up internal code of readBPM().
+o ROBUSTNESS: Added unit tests for readBPM().  Note that these are
+  only run if environment variable '_R_CHECK_FULL_' is set, i.e.
+  they will *not* be perfomed on the Bioconductor servers.
 
-
-[...]
 
 Version: 0.1.5 [2012-11-28]
 o Fixed typos in help for readBPM() and readIDAT().

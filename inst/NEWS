@@ -1,6 +1,12 @@
 Package: illuminaio
 ===================
 
+Version: 0.3.5 [2013-08-02]
+o Cleaned up internal code of readBPM().
+
+
+[...]
+
 Version: 0.1.5 [2012-11-28]
 o Fixed typos in help for readBPM() and readIDAT().
 

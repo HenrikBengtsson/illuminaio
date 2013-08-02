@@ -1,4 +1,28 @@
 readBPM <- function(file) {
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Local functions
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    readByte <- function(con, n=1L, ...) {
+      readBin(con, what="integer", n=n, size=1L, endian="little", signed=FALSE)
+    }
+
+    readShort <- function(con, n=1L, ...) {
+      readBin(con, what="integer", n=n, size=2L, endian="little", signed=FALSE)
+    }
+
+    readInt <- function(con, n=1L, ...) {
+      readBin(con, what="integer", n=n, size=4L, endian="little", signed=TRUE)
+    }
+
+    readLong <- function(con, n=1L, ...) {
+      readBin(con, what="integer", n=n, size=8L, endian="little", signed=TRUE)
+    }
+
+    readString <- function(con, ...) {
+      n <- readByte(con, n=1L);
+      readChar(con, nchars=n);
+    }
+
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Validate arguments
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -31,48 +55,43 @@ readBPM <- function(file) {
 ##        stop("Cannot read BPM file. File format error. Unknown magic: ", prefixCheck)
 ##    }
 
-    null.1 <- readBin(con, what="integer", n=1L, size=1L, signed=FALSE)
+    null.1 <- readByte(con)
     ## should be 1
 
-    versionNumber <-
-        readBin(con, what="integer", n=1L, size=4L, endian="little")
+    versionNumber <- readInt(con, n=1L)
     ## should be 4
 ##    if (versionNumber != 4L) {
 ##        stop("Cannot read BPM file. Unsupported BPM file format version: ", versionNumber)
 ##    }
 
-    nChars <- readBin(con, what="integer", n=1L, size=1L, signed=FALSE)
-    chipType <- readChar(con, nchars=nChars)
+    chipType <- readString(con)
 
-    null.2 <- readBin(con, what="integer", n=2L, size=1L, signed=FALSE)
+    null.2 <- readByte(con, n=2L)
 
     csvLines <- readLines(con, n=22L)
 
     entriesByteOffset <- seek(con)
-    nEntries <- readBin(con, what="integer", n=1L, size=4L,
-                        endian="little")
+    nEntries <- readInt(con, n=1L)
 
     if (FALSE) {
         snpIndexByteOffset <- seek(con)
-        snpIndex <- readBin(con, what="integer", n=nEntries, size=4L,
-                            endian="little")
+        snpIndex <- readInt(con, n=nEntries)
         ## for the 1M array, these are simply in order from 1 to 1072820.
 
         snpNamesByteOffset <- seek(con)
         snpNames <- rep("A", times=nEntries)
         for(i1 in 1:nEntries){
-            nChars <- readBin(con, what="integer", n=1L, size=1L, signed=FALSE)
-            snpNames[i1] <- readChar(con, nchars=nChars)
+            snpNames[i1] <- readString(con)
         }
     }
 
     seek(con, where=15278138L)
 
     normIDByteOffset <- seek(con)
-    normID <- readBin(con, what="integer", n=nEntries, size=1L, signed=FALSE) + 1L
+    normID <- readByte(con, n=nEntries) + 1L
 
     newBlockByteOffset <- seek(con)
-    newBlock <- readBin(con, what="integer", n=10000L, size=1L, signed=FALSE)
+    newBlock <- readByte(con, n=10000L)
 
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

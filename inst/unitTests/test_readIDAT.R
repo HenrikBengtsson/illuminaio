@@ -16,7 +16,7 @@ test_readIDAT_hapmap370k <- function() {
 
 test_readIDAT_4343238080 <- function() {
     idatFile <- system.file("extdata", "idat", "4343238080_A_Grn.idat", package = "IlluminaDataTestFiles")
-    idatData <- readIDAT_enc(idatFile)$Quants
+    idatData <- readIDAT(idatFile)$Quants
     gStudio <- read.delim("http://compbio.sysbiol.cam.ac.uk/Resources/IDATreader/4343238080_A_ProbeSummary.txt", sep = "\t", header = TRUE)
 
     ## not all probes are present in GenomeStudio output, so only select those that are

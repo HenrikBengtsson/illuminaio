@@ -1,4 +1,4 @@
-readIDAT_enc<- function(file = NULL, verbose = FALSE) {
+readIDAT_enc<- function(file) {
 
     if(!file.exists(file)) {
         stop("Unable to find file ", file)
@@ -6,13 +6,13 @@ readIDAT_enc<- function(file = NULL, verbose = FALSE) {
 
     tempFile <- tempfile();
     
-    if(verbose) 
-        message("Decrypting to XML")
+    #if(verbose) 
+    #    message("Decrypting to XML")
 
     out <- .C("decrypt", as.character(file), as.character(tempFile), PACKAGE = "illuminaio");
     
-    if(verbose)
-        message("Reading XML")
+    #if(verbose)
+    #    message("Reading XML")
     
     r <- readLines(tempFile, warn = FALSE); 
     file.remove(tempFile);   

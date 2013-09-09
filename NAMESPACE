@@ -1,3 +1,3 @@
 importFrom(base64, decode)
 useDynLib(illuminaio)
-export(readIDAT, readIDAT_enc, readBPM, readBGX)
+export(readIDAT, readBPM, readBGX)

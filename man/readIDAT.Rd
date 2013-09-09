@@ -1,6 +1,5 @@
 \name{readIDAT}
 \alias{readIDAT}
-\alias{readIDAT}
 
 \title{Low-level function to read IDAT files}
 

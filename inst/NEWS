@@ -1,6 +1,13 @@
 Package: illuminaio
 ===================
 
+Version: 0.3.8
+o Bug fixes, renaming of readIDAT_bin to readIDAT_nonenc.
+
+Version: 0.3.6
+o Added one parent function readIDAT which checks file format
+  and dispatches to the relevant subfunction.
+
 Version: 0.3.5 [2013-08-02]
 o Cleaned up internal code of readBPM().
 o ROBUSTNESS: Added unit tests for readBPM().  Note that these are

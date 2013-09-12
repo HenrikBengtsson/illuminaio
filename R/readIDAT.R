@@ -27,7 +27,7 @@ readIDAT <- function(file) {
         res <- readIDAT_enc(file)
     }
     else if (version == 3) {
-        res <- readIDAT_bin(file)
+        res <- readIDAT_nonenc(file)
     }
     else {
         stop("Cannot read IDAT file. Unsupported IDAT file format version: ", version)

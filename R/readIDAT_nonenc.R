@@ -1,4 +1,4 @@
-readIDAT_bin <- function(file) {
+readIDAT_nonenc <- function(file) {
     readByte <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=1, endian="little", signed=FALSE)
     }

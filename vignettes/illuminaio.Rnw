@@ -1,87 +1,111 @@
-%\VignetteIndexEntry{Encrypted IDAT XML Format}
-%\VignetteDepends{}
-%\VignetteKeywords{}
-%\VignettePackage{illuminaio}
-\documentclass[12pt]{article}
-\usepackage{hyperref}
-\usepackage{fullpage}
-\setlength{\parindent}{0cm}
+%% \VignetteIndexEntry{illuminaio}
 
-\newcommand{\Rfunction}[1]{{\texttt{#1}}}
-\newcommand{\Robject}[1]{{\texttt{#1}}}
-\newcommand{\Rpackage}[1]{{\textsf{#1}}}
-\newcommand{\Rmethod}[1]{{\texttt{#1}}}
-\newcommand{\Rfunarg}[1]{{\texttt{#1}}}
-\newcommand{\Rclass}[1]{{\textit{#1}}}
+\documentclass{article}
+\usepackage{parskip}
 
-\renewcommand{\familydefault}{\sfdefault}
+<<style, echo=FALSE, results=tex>>=
+BiocStyle::latex()
+@
+\newcommand{\exitem}[3]{\item \texttt{\textbackslash#1\{#2\}} #3 \csname#1\endcsname{#2}.}
+
+\title{illuminaio}
+\author{M.L. Smith, K.D. Hansen}
 
 \begin{document}
-\title{Encrypted IDAT Format}
-\author{Mike L. Smith}
+
 \maketitle
 
-The aim of this document is too briefly describe what's known about the decryption of Illumina's expression IDAT files and the format of the files once they have been decrypted.
+\section*{Introduction}
 
-\section*{Decryption}
+\warning{This vignette is still under development - MLS}
 
-Most of the information provided here, including the decryption key, was determined by examining the IlluminaExpressionFileCreator module in GenePattern.  The decryption key itself appears to be universal (I've not found an expression IDAT that it doesn't work on) and is given here:
+\Biocpkg{illuminaio} is designed to provide a single package containing routines for importing data from Illumina BeadArray platforms into \R{}.  The intention is for \Biocpkg{illuminaio} to provide developers of downstream analysis packages with a mechanism for extracting all possible information from IDAT files in a relatively simple way.  The choice of data to retain and how it should be stored is then left for the end user to decide.
 
-\begin{verbatim}
-127, 10, 73, -115, -47, -40, 25, -85
-\end{verbatim}
+This vignette gives examples of how data files can be read and discusses the values that are returned, which will vary depending upon the BeadArray platform used.  It also demonstrates that the values extracted by \Biocpkg{illuminaio} are the same as those returned when using Illumina's own GenomeStudio software.
 
-The format of each IDAT file follows the same basic layout.  Each encrypted IDAT starts with the string \texttt{IDAT}, followed by five bytes with the values \texttt{1, 0, 0, 0, 8}.  I've not seen anything different here, although code comments suggest the first four values may be a version number.  The fifth value indicates the length in bytes of the next item to be read, a file specific decryption key.  This must be decrypted using the universal key shown above.  After this the universal key is no longer needed and the file specific key is used to decrypt the actual data.  The data begins immediately after the file key and continues until the end of the file.  \textit{illuminaio} decrypts it in blocks of 8 bytes using the now decrypted file key.  The output is an XML file.
+\section*{Reading Data}
+
+The code below gives and example of how an IDAT file (in this case from a Human expression array) can be read, and explores the information that is extracted.
+
+<<loadData>>=
+library(illuminaio)
+library(IlluminaDataTestFiles)
+idatFile <- system.file("extdata", "idat", "4343238080_A_Grn.idat",
+                        package = "IlluminaDataTestFiles")
+idat <- readIDAT(idatFile)                                 
+@ 
+
+The first two lines above load libraries require for this vignette.  Firstly this package and then \Biocpkg{IlluminaDataTestFiles}, a small data package containing the example files that are used throughout this vignette.  The third lines generates the complete path to one such file.  We use the function \Rfunction{readIDAT} to read the file.  This function take only a single argument, the file's path.  Although IDAT files are found in multiple formats, \Rfunction{readIDAT} is able to determine this and will call the appropriate reading routine internally.  The returned object is a list, the contents of which is explored below.
+
+<<exploreData>>=
+names(idat)
+@ 
+
+Using the \Rfunction{names} command above lists the data extracted from the file.  In this case \texttt{Barcode} and \texttt{Section} are the identifiers for the BeadChip and can usually be found in the file name as well.  \texttt{ChipType} describes the BeadArray platform this file was generated from.  The \texttt{RunInfo} slot holds information about the processing performed on the array, most notably the date upon which it was scanned.  Such information may be useful if one is attempting to identify batch effects amongst multiple samples.  The \texttt{Quants} is where the per-bead-type values are found.  The commands below assign the \texttt{Quants} values to a new variable for convenience, and then print the first six entries from the resulting data.frame.
+
+<<printQuants>>=
+idatData <- idat$Quants    
+head(idatData)
+@ 
+
+We can see that for this expression array a total of 10 values are returned for each bead-type.  The column headers are pulled directly from the IDAT file and do not directly match with how things are commonly labelled in GenomeStudio, although for the most part they are relatively easy to decipher.  The \texttt{CodeBinData, MeanBinData} and \texttt{NumGoodBeadsBinData} are those that are reported by default in GenomeStudio and correspond the ProbeID, AVG\_Signal and NBEADS values respectively.  \texttt{DevBinData} gives the standard deviation for the bead-type and can be used the generate the BEAD\_STDERR values GenomeStudio reports.  The remaining columns give additional information and are discussed in the file \texttt{EncryptedFormat.pdf} that also accompanies this package.
+
+The example above focused on reading an IDAT file produced by scanning an expression array.  To highlight some of the differences in output we shall now read a file from an Infinium genotyping array.
+
+\fixme{I should check exactly what platform this is from - MLS}
+
+<<readGenotyping>>=
+genotypeIdatFile <- system.file("extdata", "idat", "5723646052_R02C02_Grn.idat",
+                        package = "IlluminaDataTestFiles")
+genotypeIdat <- readIDAT(genotypeIdatFile)
+names(genotypeIdat)
+@ 
+
+The reading of the file proceeds in exactly the same way as before and a list is again returned.  However, there are several more data fields returned.  Again \texttt{Quants} is where the per-bead-type values are stored.
+
+<<printGenotypingQuants>>=
+head(genotypeIdat$Quants)
+@ 
+
+For genotyping arrays only the four typically reported values are contained within the IDAT file and their column names more closely resemble those that are found in GenomeStudio.
+
+\section*{Comparison with GenomeStudio}
+
+Now we shall compare the values extracted by \Biocpkg{illuminaio} with those reported by Illumina's GenomeStudio software, to ensure our file reading routines are performing correctly. 
+
+<<ImportGenomeStudio>>=
+gStudio <- read.delim(
+       "http://compbio.sysbiol.cam.ac.uk/Resources/IDATreader/4343238080_A_ProbeSummary.txt",
+       sep = "\t", header = TRUE)
+idatData <- idatData[which(idatData[,"CodesBinData"] %in% gStudio[,"ProbeID"]),]
+gStudio <- gStudio[match(idatData[,"CodesBinData"], gStudio[,"ProbeID"]),]
+@ 
+
+The first line above reads a file that was produced by reading the IDAT file into GenomeStudio and then immediately exporting that data as a tab separated text file.  No other processing was performed on the data.  \fixme{Currently this file is stored on a web server, although the intention is to include it in the \Biocpkg{illuminaDataTestFile} package.}
+
+However, the two datasets are not quite compatible at the moment.  Reading directly from an IDAT file returns values for several bead-types that serve as internal controls and are not annotated by Illumina.  These bead-types are excluded automatically by GenomeStudio, so the second line above identifies and removes them from our \Biocpkg{illuminaio} data.  The two data sets should now contain the same number of bead-types.  
+
+The inclusion of these extra bead-types is not the only difference, they are also in different orders.  Bead-types are extracted in numerical order from IDAT files, but the GenomeStudio output is sorted alphabetically.  The third line reorders the GenomeStudio values to match those from \Biocpkg{illuminaio}, making our comparison slightly easier.
 
 
+<<figureComparingValues, fig=TRUE, include=FALSE, width=10, height=5.2>>=
+par(mfrow = c(1,2))
+plot(idatData[, "MeanBinData"], gStudio[, "X4343238080_A.AVG_Signal"], 
+     xlab = "illuminaio", ylab = "GenomeStudio")
+hist(idatData[, "MeanBinData"]- gStudio[, "X4343238080_A.AVG_Signal"],
+     breaks = 100, main = "", xlab = "Difference")
+@ 
+\incfig{illuminaio-figureComparingValues}{\textwidth}{}{}
 
-\section*{XML Format}
 
-So far I've encountered two different forms for the XML file, although the underlying schema seems the same. On rough observations this appears to be related to date of scanning, but it might be chip type or scanner software related.  Listed here are the consistencies and differences I've observed.\\
  
-\subsection*{Consistencies}
- 
-The various summarized bead data are stored as attributes within the \texttt{<IntensityFile>} tag.  Each new attribute is indicated by \texttt{\_\_NameOfEntry=} and the data follow in base64 format.  Following the opening \texttt{<IntensityFile>} tag (and the bead summary data) are a number of tags containing meta data such as the chip type, various software versions, dates for decoding and scanning.  Currently \textit{illuminaio} ignores these and extracts on the summarized data.
-
-\subsection*{Differences}
- 
-The difference between the two types of file seen so far seem primarily to be how many characters are stored per line, and thus the total number of lines.\\
-
-\textbf{Older IDAT}
-\begin{itemize}
-    \item Line length for base64 entries is 76 characters
-    \item Total number of lines $\approx$ 32000
-\end{itemize}
-    
-\textbf{Newer IDAT}
-\begin{itemize}
-    \item base64 entries stored as a single `very long' string
-    \item Total number of lines $<$ 100
-\end{itemize}
-
-\section*{Implementation}
-
-Decryption routines are included with the package and are based on code taken from \textit{gnulib}.  File processing is handled by a \sf{C} function called using \texttt{.C} that reads the IDAT file and writes out XML.  The XML file is then read into \sf{R} and each of the data chunks are processed in turn. For each, the base64 text is written to file and then read by the \texttt{decode} function from the \textit{base64} package.  This writes back out the binary form of the data which is finally read back into \sf{R} as a vector.  The final output is a \texttt{data.frame} where each row corresponds to a bead-type and each column is an attribute.
-
-\newpage
-
-\section*{Data}
-
-All the IDATs that I've decrypted have contained the same ten fields of summarized bead data.  I don't think the format is documented anywhere so I've extrapolated what I think is in each.  Users of GenomeStudio might have a better idea of what these are, but I've tried to work them out from looking at the bead-level data. In most cases the values appear to be derived after outliers have been removed.  
-
-\begin{itemize}
-    \item MeanBinData - Mean intensity of non-outlying beads.
-    \item TrimmedMeanBinData - Clearly a trimmed mean, but I don't know at what threshold.
-    \item DevBinData - Standard deviation for intensity of non-outlying beads.
-    \item MedianBinData - Apparently the median intensity of non-outlying beads. Sometimes I can't reproduce the value, other times it's fine.  Maybe there's some other outlier criteria used here.
-    \item BackgroundBinData - Mean? Median? background value for all beads of this type.
-    \item BackgroundDevBinData - Standard deviation background value for all beads.
-    \item CodesBinData - ProbeID.
-    \item NumBeadsBinData - The total number of beads of this type decoded for the array.
-    \item NumGoodBeadsBinData - The number of beads that were not classed as outliers.
-    \item IllumicodeBinData - ProbeID again.  I've not seen this differ from the CodesBinData.
-\end{itemize}
-
+%---------------------------------------------------------
+\section*{Session info}
+%---------------------------------------------------------
+Here is the output of \Rfunction{sessionInfo} on the system on which
+this document was compiled:
+<<sessionInfo, results=tex, print=TRUE>>=
+toLatex(sessionInfo())
+@
 
 \end{document}
-

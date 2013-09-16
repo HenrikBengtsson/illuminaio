@@ -95,7 +95,7 @@ The inclusion of these extra bead-types is not the only difference, they are als
 
 The code below produces the two plots seen in Figure 1.
 
-<<figureComparingValues, fig=TRUE, include=FALSE, width=10, height=5.2, eps=FALSE, png=FALSE, pdf=TRUE>>=
+<<figureComparingValues, fig=TRUE, include=FALSE, width=10, height=5.2, png=TRUE, pdf=FALSE>>=
 par(mfrow = c(1,2))
 plot(idatData[, "MeanBinData"], gStudio[, "X4343238080_A.AVG_Signal"], 
      xlab = "illuminaio", ylab = "GenomeStudio")

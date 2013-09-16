@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{Encrypted IDAT XML Format}
+%\VignetteIndexEntry{Description of Encrypted IDAT Format}
 %\VignetteDepends{}
 %\VignetteKeywords{}
 %\VignettePackage{illuminaio}

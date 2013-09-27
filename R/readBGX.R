@@ -1,19 +1,24 @@
-readBGX = function(file) {
+readBGX <- function(file) {
+ 
+    ## read the [Heading] section of the file (normally 7 lines, but we'll be a little cautious)
+    tmp <- read.delim(gzfile(file), sep = "\t", header = FALSE, nrows = 10, stringsAsFactors = FALSE)
 
+    ## get the number of probes and controls, and find the line the probes start on
+    nProbes <- as.integer(tmp[grep("Number of Probes", tmp[,1]), 2])
+    nControls <- as.integer(tmp[grep("Number of Controls", tmp[,1]), 2])
+    probesHead <- grep("\\[Probes\\]", tmp[,1])
+
+    ## read probes and then controls
     con <- gzfile(file)
-    tmp = readLines(con)
-    close(con);
-    
-    skip = grep("\\[Probes\\]", tmp)
-    end = grep("\\[Controls\\]", tmp)
-    nrows = end-skip-2
-
-    probes = read.delim(gzfile(file), sep="\t", header=TRUE, skip=skip, nrows=nrows, quote="")
-    
-    controls = read.delim(gzfile(file), sep="\t", header=TRUE, skip=end)
-
+    open(con)
+    probes <- read.delim(con, sep="\t", header=TRUE, skip=probesHead, 
+                       nrows=nProbes, quote="", stringsAsFactors=FALSE)
+    controls <- read.delim(con, sep="\t", header=TRUE, skip = 1, 
+                         nrows=nControls, quote="", stringsAsFactors=FALSE)
+    close(con)
+  
     allStuff <- list(probes = probes,
-                    controls = controls)
-
+                   controls = controls)
+  
     return(allStuff)
 }

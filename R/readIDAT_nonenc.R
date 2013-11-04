@@ -1,8 +1,4 @@
 readIDAT_nonenc <- function(file) {
-    seek <- function(con, where, origin){
-        cat(sprintf("seek: %s\n", paste(where, collapse = ", ")))
-        base::seek(con = con, where = where, origin = origin)
-    }
     readByte <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=1, endian="little", signed=FALSE)
     }

@@ -1,6 +1,9 @@
 Package: illuminaio
 ===================
 
+Version: 0.5.1
+o Resshuffled internal code in readIDAT_nonenc so that seek() is always forward based.
+
 Version: 0.3.9
 o Added vignette giving examples of usage and demonstrating comparison
   with GenomeStudio output

@@ -1,4 +1,8 @@
 readIDAT_nonenc <- function(file) {
+    seek <- function(con, where, origin){
+        cat(sprintf("seek: %s\n", paste(where, collapse = ", ")))
+        base::seek(con = con, where = where, origin = origin)
+    }
     readByte <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=1, endian="little", signed=FALSE)
     }
@@ -29,6 +33,43 @@ readIDAT_nonenc <- function(file) {
         ## [This last part is to be implemented. /HB 2011-03-28]
         n <- readByte(con, n=1)
         readChar(con, nchars=n)
+    }
+    readField <- function(con, field) {
+        switch(field,
+               "IlluminaID" = readInt(con = con, n=nSNPsRead),
+               "SD" = readShort(con = con, n=nSNPsRead),
+               "Mean"= readShort(con = con, n=nSNPsRead),
+               "NBeads" = readByte(con = con, n=nSNPsRead),
+               "MidBlock" = {
+                   nMidBlockEntries <- readInt(con = con, n=1)
+                   MidBlock <- readInt(con = con, n=nMidBlockEntries)
+               },
+               "RedGreen" = readInt(con = con, n=1),
+               "MostlyNull" = readString(con = con),
+               "Barcode" = readString(con = con),
+               "ChipType" = readString(con = con),
+               "MostlyA" = readString(con = con),
+               "Unknown.1" = readString(con = con),
+               "Unknown.2" = readString(con = con),
+               "Unknown.3" = readString(con = con),
+               "Unknown.4" = readString(con = con),
+               "Unknown.5" = readString(con = con),
+               "Unknown.6" = readString(con = con),
+               "Unknown.7" = readString(con = con),
+               "RunInfo" = {
+                   nRunInfoBlocks <- readInt(con = con, n=1)
+                   naValue <- as.character(NA)
+                   RunInfo <- matrix(naValue, nrow=nRunInfoBlocks, ncol=5)
+                   colnames(RunInfo) <- c("RunTime", "BlockType", "BlockPars",
+                                          "BlockCode", "CodeVersion")
+                   for (ii in 1:2) { 
+                       for (jj in 1:5) {
+                           RunInfo[ii,jj] <- readString(con = con)
+                       }
+                   }
+                   RunInfo
+               },
+               stop("readIDAT_nonenc: unknown field"))
     }
     
     file <- path.expand(file)
@@ -94,83 +135,35 @@ readIDAT_nonenc <- function(file) {
             nNewFields <- nNewFields + 1
         }
     }
-        
+
+    stopifnot(min(fields[, "byteOffset"]) == fields["nSNPsRead", "byteOffset"])
+
     seek(con, where=fields["nSNPsRead", "byteOffset"], origin="start")
     nSNPsRead <- readInt(con, n=1)
-    
-    seek(con, where=fields["IlluminaID", "byteOffset"], origin="start")
-    IlluminaID <- readInt(con, n=nSNPsRead)
-    
-    seek(con, where=fields["SD", "byteOffset"], origin="start")
-    SD <- readShort(con, n=nSNPsRead)
-    
-    seek(con, where=fields["Mean", "byteOffset"], origin="start")
-    Mean <- readShort(con, n=nSNPsRead)
-    
-    seek(con, where=fields["NBeads", "byteOffset"], origin="start")
-    NBeads <- readByte(con, n=nSNPsRead)
-    
-    seek(con, where=fields["MidBlock", "byteOffset"], origin="start")
-    nMidBlockEntries <- readInt(con, n=1)
-    MidBlock <- readInt(con, n=nMidBlockEntries)
-    
-    
-    seek(con, where=fields["RunInfo", "byteOffset"], origin="start")
-    nRunInfoBlocks <- readInt(con, n=1)
-    naValue <- as.character(NA)
-    RunInfo <- matrix(naValue, nrow=nRunInfoBlocks, ncol=5)
-    colnames(RunInfo) <- c("RunTime", "BlockType", "BlockPars",
-                           "BlockCode", "CodeVersion")
-    for (ii in 1:2) { 
-        for (jj in 1:5) {
-            RunInfo[ii,jj] <- readString(con)
-        }
-    }
-    
-    seek(con, where=fields["RedGreen", "byteOffset"], origin="start")
-    RedGreen <- readInt(con, n=1)
-    
-    seek(con, where=fields["MostlyNull", "byteOffset"], origin="start")
-    MostlyNull <- readString(con)
-    
-    seek(con, where=fields["Barcode", "byteOffset"], origin="start")
-    Barcode <- readString(con)
-    
-    seek(con, where=fields["ChipType", "byteOffset"], origin="start")
-    ChipType <- readString(con)
 
-    seek(con, where=fields["MostlyA", "byteOffset"], origin="start")
-    MostlyA <- readString(con)
+    res <- rownames(fields)
+    names(res) <- res
+    res <- res[order(fields[res, "byteOffset"])]
+    res <- res[names(res) != "nSNPsRead"]
+    res <- lapply(res, function(xx) {
+        where <- fields[xx, "byteOffset"]
+        seek(con, where = where, origin = "start")
+        readField(con = con, field = xx)
+    })
     
-    seek(con, where=fields["Unknown.1", "byteOffset"], origin="start")
-    Unknown.1 <- readString(con)
-    
-    seek(con, where=fields["Unknown.2", "byteOffset"], origin="start")
-    Unknown.2 <- readString(con)
-    
-    seek(con, where=fields["Unknown.3", "byteOffset"], origin="start")
-    Unknown.3 <- readString(con)
-    
-    seek(con, where=fields["Unknown.4", "byteOffset"], origin="start")
-    Unknown.4 <- readString(con)
-    
-    seek(con, where=fields["Unknown.5", "byteOffset"], origin="start")
-    Unknown.5 <- readString(con)
-    
-
     Unknowns <-
-        list(MostlyNull=MostlyNull,
-             MostlyA=MostlyA,
-             Unknown.1=Unknown.1,
-             Unknown.2=Unknown.2,
-             Unknown.3=Unknown.3,
-             Unknown.4=Unknown.4,
-             Unknown.5=Unknown.5
+        list(MostlyNull=res$MostlyNull,
+             MostlyA=res$MostlyA,
+             Unknown.1=res$Unknown.1,
+             Unknown.2=res$Unknown.2,
+             Unknown.3=res$Unknown.3,
+             Unknown.4=res$Unknown.4,
+             Unknown.5=res$Unknown.5
              )
     
-    Quants <- cbind(Mean, SD, NBeads)
+    Quants <- cbind(res$Mean, res$SD, res$NBeads)
     colnames(Quants) <- c("Mean", "SD", "NBeads")
-    rownames(Quants) <- as.character(IlluminaID)
+    rownames(Quants) <- as.character(res$IlluminaID)
     
     res <- list(
         fileSize=fileSize,
@@ -179,13 +172,12 @@ readIDAT_nonenc <- function(file) {
         fields=fields,
         nSNPsRead=nSNPsRead,
         Quants=Quants,
-        MidBlock=MidBlock,
-        RedGreen=RedGreen,
-        Barcode=Barcode,
-        ChipType=ChipType,
-        RunInfo=RunInfo,
+        MidBlock=res$MidBlock,
+        RedGreen=res$RedGreen,
+        Barcode=res$Barcode,
+        ChipType=res$ChipType,
+        RunInfo=res$RunInfo,
         Unknowns=Unknowns
         )
-    
     res
 }

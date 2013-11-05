@@ -1,23 +1,45 @@
-test_readIDAT_minfiData <- function() {
-    load(file.path(path.package("illuminaio"), "unitTests", "idat.450k.rda"))
+test_readIDAT_450k <- function() {
+    library(IlluminaDataTestFiles)
+    load(file.path(path.package("IlluminaDataTestFiles"), "extdata", "testData", "idat.450k.rda"))
     idatFile <- system.file("extdata", "idat", "5723646052_R02C02_Grn.idat",
                             package = "IlluminaDataTestFiles")
     idat <- illuminaio::readIDAT(idatFile)
     checkEquals(idat, idat.450k)
 }
 
-test_readIDAT_hapmap370k <- function() {
-    load(file.path(path.package("illuminaio"), "unitTests", "idat.370k.rda"))
+test_readIDAT_370k <- function() {
+    library(IlluminaDataTestFiles)
+    load(file.path(path.package("IlluminaDataTestFiles"), "extdata", "testData", "idat.370k.rda"))
     idatFile <- system.file("extdata", "idat", "4019585376_B_Red.idat",
                             package = "IlluminaDataTestFiles")
     idat <- illuminaio::readIDAT(idatFile)
     checkEquals(idat, idat.370k)
 }
 
-test_readIDAT_4343238080 <- function() {
+test_readIDAT_wg6v2 <- function() {
+    library(IlluminaDataTestFiles)
+    load(file.path(path.package("IlluminaDataTestFiles"), "extdata", "testData", "idat.wg6v2.rda"))
+    idatFile <- system.file("extdata", "idat", "4343238080_A_Grn.idat", 
+                            package = "IlluminaDataTestFiles")
+    idat <- illuminaio::readIDAT(idatFile)
+    checkEquals(idat, idat.wg6v2)
+}
+
+test_readIDAT_ht12v4 <- function() {
+    library(IlluminaDataTestFiles)
+    load(file.path(path.package("IlluminaDataTestFiles"), "extdata", "testData", "idat.ht12v4.rda"))
+    idatFile <- system.file("extdata", "idat", "6016741005_A_Grn.idat", 
+                            package = "IlluminaDataTestFiles")
+    idat <- illuminaio::readIDAT(idatFile)
+    checkEquals(idat, idat.ht12v4)
+}
+
+test_readIDAT_gs_wg6v2<- function() {
+    library(IlluminaDataTestFiles)
     idatFile <- system.file("extdata", "idat", "4343238080_A_Grn.idat", package = "IlluminaDataTestFiles")
     idatData <- readIDAT(idatFile)$Quants
-    gStudio <- read.delim("http://compbio.sysbiol.cam.ac.uk/Resources/IDATreader/4343238080_A_ProbeSummary.txt", sep = "\t", header = TRUE)
+    gsFile <- system.file("extdata", "gs", "4343238080_A_ProbeSummary.txt.gz", package = "IlluminaDataTestFiles")
+    gStudio <- read.delim(gzfile(gsFile, open = "r"), sep = "\t", header = TRUE)
 
     ## not all probes are present in GenomeStudio output, so only select those that are
     idatData <- idatData[which(idatData[,"CodesBinData"] %in% gStudio[,"ProbeID"]),]

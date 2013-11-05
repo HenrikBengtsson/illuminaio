@@ -67,26 +67,41 @@ readIDAT_nonenc <- function(file) {
                },
                stop("readIDAT_nonenc: unknown field"))
     }
-    
-    file <- path.expand(file)
-    fileSize <- file.info(file)$size
 
-    con <- file(file, "rb")
-    on.exit({
-        close(con)
-    })
+    if(! (is.character(file) || try(isOpen(file))))
+        stop("argument 'file' needs to be either a character or an open, seekable connection")
     
+    if(is.character(file)) {
+        stopifnot(length(file) == 1)
+        file <- path.expand(file)
+        stopifnot(file.exists(file))
+        fileSize <- file.info(file)$size
+        if(grepl("\\.gz$", file))
+            con <- gzfile(file, "rb")
+        else
+            con <- file(file, "rb")
+        on.exit({
+            close(con)
+        })
+    } else {
+        con <- file
+        fileSize <- 0
+    }
+
+    if(!isSeekable(con))
+        stop("The file connection needs to be seekable")
+
     ## Assert file format
     magic <- readChar(con, nchars=4)
-    #if (magic != "IDAT") {
-    #    stop("Cannot read IDAT file. File format error. Unknown magic: ", magic)
-    #}
+    if (magic != "IDAT") {
+        stop("Cannot read IDAT file. File format error. Unknown magic: ", magic)
+    }
     
     ## Read IDAT file format version
     version <- readLong(con, n=1)
-    #if (version < 3) {
-    #    stop("Cannot read IDAT file. Unsupported IDAT file format version: ", version)
-    #}
+    if (version < 3) {
+        stop("Cannot read IDAT file. Unsupported IDAT file format version: ", version)
+    }
         
     ## Number of fields
     nFields <- readInt(con, n=1)

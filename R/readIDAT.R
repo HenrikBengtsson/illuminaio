@@ -4,12 +4,16 @@ readIDAT <- function(file) {
     ## Currently this just checks the magic "IDAT" string and then reads the version number
     ## The file name is then passed and the file opened again by the read function.
 
+    stopifnot(is.character(file) || length(file) != 0)
     file <- path.expand(file)
     if(!file.exists(file)) {
         stop("Unable to find file ", file)
     }
 
-    con <- file(file, "rb")
+    if(grepl("\\.gz", file))
+        con <- gzfile(file, "rb")
+    else
+        con <- file(file, "rb")
     on.exit({
         close(con)
     })

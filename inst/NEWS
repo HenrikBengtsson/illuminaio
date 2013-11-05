@@ -1,6 +1,10 @@
 Package: illuminaio
 ===================
 
+Version: 0.5.2
+o moved testData to IlluminaDataTestFiles
+o Added unitTests for encrypted IDATs.
+
 Version: 0.5.1
 o Resshuffled internal code in readIDAT_nonenc so that seek() is always forward based.
 

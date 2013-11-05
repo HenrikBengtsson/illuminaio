@@ -16,7 +16,6 @@ readIDAT(file)
 }
 
 \details{
-  
   This function returns a list containing summarised intensities and other
   information extracted from a single .idat file.
 
@@ -29,7 +28,8 @@ readIDAT(file)
 
   This function is able to handle data in either format, scanning the
   file header and calling the appropriate reading routine internally.
-  
+
+  The function supports reading gzipped, unencrypted IDATs.
 }
 
 \value{

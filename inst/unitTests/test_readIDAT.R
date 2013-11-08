@@ -16,6 +16,30 @@ test_readIDAT_370k <- function() {
     checkEquals(idat, idat.370k)
 }
 
+test_readIDAT_450kgz <- function() {
+    library(IlluminaDataTestFiles)
+    idatFile1 <- system.file("extdata", "idat", "5723646052_R02C02_Grn.idat",
+                             package = "IlluminaDataTestFiles")
+    idat1 <- illuminaio::readIDAT(idatFile1)
+    idatFile2 <- system.file("extdata", "idat", "5723646052_R02C02_Grn.idat.gz",
+                             package = "IlluminaDataTestFiles")
+    idat2 <- illuminaio::readIDAT(idatFile2)
+    idat2$fileSize <- idat1$fileSize <- NULL
+    checkEquals(idat1, idat2)
+}
+
+test_readIDAT_370kgz <- function() {
+    library(IlluminaDataTestFiles)
+    idatFile1 <- system.file("extdata", "idat", "4019585376_B_Red.idat",
+                             package = "IlluminaDataTestFiles")
+    idat1 <- illuminaio::readIDAT(idatFile1)
+    idatFile2 <- system.file("extdata", "idat", "4019585376_B_Red.idat.gz",
+                             package = "IlluminaDataTestFiles")
+    idat2 <- illuminaio::readIDAT(idatFile2)
+    idat2$fileSize <- idat1$fileSize <- NULL
+    checkEquals(idat1, idat2)
+}
+
 test_readIDAT_wg6v2 <- function() {
     library(IlluminaDataTestFiles)
     load(file.path(path.package("IlluminaDataTestFiles"), "extdata", "testData", "idat.wg6v2.rda"))

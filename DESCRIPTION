@@ -1,12 +1,12 @@
 Package: illuminaio
-Version: 0.5.3
+Version: 0.5.4
 Title: Parsing Illumina microarray output files
 Description: Tools for parsing Illuminas microarray output files, including IDAT.	
 Authors@R: c(person("Keith", "Baggerly", role = "aut"),
              person("Henrik", "Bengtsson", role = "aut"),
              person(c("Kasper", "Daniel"), "Hansen", role = c("aut", "cre"),
                     email = "khansen@jhsph.edu"),
-             person("Matt", "Ritchie", role = "ctb"),
+             person("Matt", "Ritchie", role = "aut"),
              person(c("Mike", "L."), "Smith", role = "aut"),
              person("Tim", "Triche Jr.", role = "ctb"))
 Suggests: RUnit, BiocGenerics, IlluminaDataTestFiles (>= 1.0.2), BiocStyle

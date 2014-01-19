@@ -75,6 +75,20 @@ readIDAT_enc<- function(file) {
         }
     }
     file.remove(tf[1], tf[2])
+    
+    ## I have found one instance where the entries in data[[]] are not all the same length.  
+    ## This hack removes them, although this is probably not optimal
+    dataLength <- unlist(lapply(data, length))
+    commonLength <- as.integer(names(sort(table(dataLength), decreasing=TRUE)))[1]
+    extra <- NULL
+    if(any(dataLength != commonLength)) {
+        extra <- list()
+        for(i in which(dataLength != commonLength)) {
+            extra[[ names(data)[i] ]] <- data[[i]]
+            data[[i]] <- NULL
+      }
+    }
+    
 
     ## grab some of the other information stored in the XML file
     runInfo <- extractRunInfo(r)
@@ -87,6 +101,8 @@ readIDAT_enc<- function(file) {
             Quants=as.data.frame(data),
             RunInfo=runInfo
            )
+    if(!is.null(extra)) 
+        res[["extra"]] <- extra
     
     return(res)
     

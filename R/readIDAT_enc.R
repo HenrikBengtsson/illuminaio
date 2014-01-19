@@ -102,7 +102,7 @@ readIDAT_enc<- function(file) {
             RunInfo=runInfo
            )
     if(!is.null(extra)) 
-        res[["extra"]] <- extra
+        res[["Extra"]] <- extra
     
     return(res)
     

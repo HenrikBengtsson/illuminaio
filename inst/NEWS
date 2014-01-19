@@ -1,6 +1,10 @@
 Package: illuminaio
 ===================
 
+Version: 0.5.5
+o Added support for encrypted IDAT files where not all data fields are of the
+  same length e.g. HumanHap550 v1
+
 Version: 0.5.2
 o moved testData to IlluminaDataTestFiles
 o Added unitTests for encrypted IDATs.

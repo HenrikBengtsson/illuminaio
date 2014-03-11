@@ -1,33 +1,62 @@
 Package: illuminaio
 ===================
 
-Version: 0.5.5
-o Added support for encrypted IDAT files where not all data fields are of the
-  same length e.g. HumanHap550 v1
+Version: 0.5.6 [2014-03-10]
+o Added a CITATION file, cf. citation("illuminaio").
 
-Version: 0.5.2
-o moved testData to IlluminaDataTestFiles
+
+Version: 0.5.5 [2014-01-19]
+o Added support for encrypted IDAT files where not all data fields are of the
+  same length e.g. HumanHap550 v1.
+
+
+Version: 0.5.2 [2013-11-05]
+o moved testData to IlluminaDataTestFiles.
 o Added unitTests for encrypted IDATs.
 
-Version: 0.5.1
+
+Version: 0.5.1 [2013-11-04]
 o Resshuffled internal code in readIDAT_nonenc so that seek() is always forward based.
 
-Version: 0.3.9
-o Added vignette giving examples of usage and demonstrating comparison
-  with GenomeStudio output
+Version: 0.5.0 [2013-10-14; BioC 2.14]
+o The version number was bumped for the Bioconductor devel version.
+o No updates.
 
-Version: 0.3.8
+
+Version: 0.4.0 [2013-10-14; BioC 2.13]
+o The version number was bumped for the Bioconductor release version.
+o No updates.
+
+
+Version: 0.3.9 [2013-09-13]
+o Added vignette giving examples of usage and demonstrating comparison
+  with GenomeStudio output;
+
+
+Version: 0.3.8 [2013-09-12]
 o Bug fixes, renaming of readIDAT_bin to readIDAT_nonenc.
 
-Version: 0.3.6
+
+Version: 0.3.6 [2013-08-21]
 o Added one parent function readIDAT which checks file format
   and dispatches to the relevant subfunction.
+
 
 Version: 0.3.5 [2013-08-02]
 o Cleaned up internal code of readBPM().
 o ROBUSTNESS: Added unit tests for readBPM().  Note that these are
   only run if environment variable '_R_CHECK_FULL_' is set, i.e.
   they will *not* be perfomed on the Bioconductor servers.
+
+
+Version: 0.3.0 [2013-04-03; BioC 2.13]
+o The version number was bumped for the Bioconductor devel version.
+o No updates.
+
+
+Version: 0.2.0 [2013-04-03; BioC 2.12]
+o The version number was bumped for the Bioconductor release version.
+o No updates.
 
 
 Version: 0.1.5 [2012-11-28]

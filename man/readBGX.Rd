@@ -24,6 +24,6 @@ readBGX(file)
 }
 
 \author{
-  Mike Smith.  Based losely on code developed by Mark Dunning available in beadarray 1.16.0
+  Mike Smith.  Based losely on code developed by Mark Dunning available in \pkg{beadarray}~1.16.0.
 }
 \keyword{IO}

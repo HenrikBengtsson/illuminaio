@@ -1,0 +1,26 @@
+citHeader("Please cite illuminaio as")
+
+citEntry(
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # BibTeX entry:
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    entry = "Article",
+    author = "Mike L Smith and Keith A Baggerly and Henrik Bengtsson and Matthew E Ritchie and Kasper D Hansen",
+    title = "{illuminaio}: An open source {IDAT} parsing tool for Illumina microarrays",
+    journal = "F1000Research",
+    year = "2013",
+    volume = "2",
+    number = "264",
+    doi = "10.12688/f1000research.2-264.v1",
+    url = "http://f1000r.es/2f5",
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Plain-text citation:
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    textVersion = paste(sep="",
+      "ML Smith, KA Baggerly, H Bengtsson, ME Ritchie & KD Hansen. ",
+      "illuminaio: An open source IDAT parsing tool for Illumina microarrays, ",
+      "F1000Research, ",
+      "2013"
+    )
+)

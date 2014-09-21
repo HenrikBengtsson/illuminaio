@@ -78,9 +78,9 @@ Now we shall compare the values extracted by \Biocpkg{illuminaio} with those rep
 \subsection*{Importing GenomeStudio Values}
 
 <<ImportGenomeStudio>>=
-gStudio <- read.delim(
-       "http://compbio.sysbiol.cam.ac.uk/Resources/IDATreader/4343238080_A_ProbeSummary.txt",
-       sep = "\t", header = TRUE)
+gsFile <- system.file("extdata", "gs", "4343238080_A_ProbeSummary.txt.gz",
+                      package = "IlluminaDataTestFiles")
+gStudio <- read.delim(gsFile, sep = "\t", header = TRUE)
 idatData <- idatData[which(idatData[,"CodesBinData"] %in% gStudio[,"ProbeID"]),]
 gStudio <- gStudio[match(idatData[,"CodesBinData"], gStudio[,"ProbeID"]),]
 @ 

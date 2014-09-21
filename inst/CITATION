@@ -13,6 +13,7 @@ citEntry(
     number = "264",
     doi = "10.12688/f1000research.2-264.v1",
     url = "http://f1000r.es/2f5",
+    pubmed = "24701342",
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Plain-text citation:
@@ -21,6 +22,6 @@ citEntry(
       "ML Smith, KA Baggerly, H Bengtsson, ME Ritchie & KD Hansen. ",
       "illuminaio: An open source IDAT parsing tool for Illumina microarrays, ",
       "F1000Research, ",
-      "2013"
+      "2013 2:264"
     )
 )

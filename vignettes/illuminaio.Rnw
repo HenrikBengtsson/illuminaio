@@ -1,12 +1,9 @@
 %% \VignetteIndexEntry{Introduction to illuminaio}
-
 \documentclass{article}
-\usepackage{parskip}
 
 <<style, echo=FALSE, results=tex>>=
 BiocStyle::latex()
 @
-\newcommand{\exitem}[3]{\item \texttt{\textbackslash#1\{#2\}} #3 \csname#1\endcsname{#2}.}
 
 \title{illuminaio}
 \author{M.L. Smith, K.D. Hansen}
@@ -20,6 +17,10 @@ BiocStyle::latex()
 \Biocpkg{illuminaio} is designed to provide a single package containing routines for importing data from Illumina BeadArray platforms into \R{}.  The intention is for \Biocpkg{illuminaio} to provide developers of downstream analysis packages with a mechanism for extracting all possible information from IDAT files in a relatively straight forward fashion.  The choice of data to retain and how it should be stored is then left for the end user to decide.
 
 This vignette gives examples of how data files can be read and discusses the values that are returned, which will vary depending upon the BeadArray platform used.  It also demonstrates that the values extracted by \Biocpkg{illuminaio} are the same as those returned when using Illumina's own GenomeStudio software.
+
+\section*{Citing illuminaio}
+
+If you use the package, please cite the associated paper \cite{illuminaio}.
 
 \section*{Reading Data}
 
@@ -107,16 +108,22 @@ hist(idatData[, "MeanBinData"]- gStudio[, "X4343238080_A.AVG_Signal"],
 
 The first plot shows the summarized bead-intensity values extracted by \Biocpkg{illuminaio} on the horizontal axis against Genomestudio's values on the vertical axis.  We can see they are highly similar.  However, they are not identical, as shown by the third line above.  The second plot visualises the distribution of the differences between the two sets of values, showing them to be small.  These are most likely introduced by rounding performed by GenomeStudio that is not carried out by \Biocpkg{illuminaio}.
 
+
+
 \pagebreak
- 
+
+
+
 %---------------------------------------------------------
 \section*{Session info}
 %---------------------------------------------------------
 Here is the output of \Rfunction{sessionInfo} on the system on which
 this document was compiled:
-<<sessionInfo, results=tex, print=TRUE>>=
+<<sessionInfo, results=tex, print=TRUE, echo=FALSE>>=
 toLatex(sessionInfo())
 @
+
+\bibliography{illuminaio}
 
 \end{document}
 

@@ -5,8 +5,8 @@ citEntry(
     # BibTeX entry:
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     entry = "Article",
-    author = "Mike L Smith and Keith A Baggerly and Henrik Bengtsson and Matthew E Ritchie and Kasper D Hansen",
-    title = "{illuminaio}: An open source {IDAT} parsing tool for Illumina microarrays",
+    author = "Smith, Mike L and Baggerly, Keith A and Bengtsson, Henrik and Ritchie, Matthew E and Hansen, Kasper D",
+    title = "{illuminaio: An open source IDAT parsing tool for Illumina microarrays}",
     journal = "F1000Research",
     year = "2013",
     volume = "2",
@@ -22,6 +22,6 @@ citEntry(
       "ML Smith, KA Baggerly, H Bengtsson, ME Ritchie & KD Hansen. ",
       "illuminaio: An open source IDAT parsing tool for Illumina microarrays, ",
       "F1000Research, ",
-      "2013 2:264"
+      "(2013) 2:264"
     )
 )

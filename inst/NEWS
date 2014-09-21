@@ -4,7 +4,8 @@ Package: illuminaio
 Version: 0.7.1 [2014-09-21]
 o The vignette now reads the GenomeStudio example file from the
   IlluminaDataTestFiles package instead of the internet.
-o Updated CITATION
+o Updated CITATION.
+o Added citation to vignette.
 
 Version: 0.7.0 [2014-04-11]
 o The version number was bumped for the Bioconductor devel version,

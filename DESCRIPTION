@@ -13,4 +13,5 @@ Suggests: RUnit, BiocGenerics, IlluminaDataTestFiles (>= 1.0.2), BiocStyle
 Imports: base64
 License: GPL-2
 URL: https://github.com/HenrikBengtsson/illuminaio
+BugReports: https://github.com/HenrikBengtsson/illuminaio/issues
 biocViews: Infrastructure, DataImport

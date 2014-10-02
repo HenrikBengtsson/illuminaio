@@ -24,8 +24,8 @@ install:
 #  - ./travis-tool.sh github_package testthat
 #  - ./travis-tool.sh github_package assertthat
   - ./travis-tool.sh install_deps
-#  - ./travis-tool.sh install_r_binary runit
-
+  - ./travis-tool.sh install_r_binary runit
+  - ./travis-tool.sh install_bioc BiocGenerics IlluminaDataTestFiles BiocStyle
 branches:
   except:
    - /-expt$/

@@ -1,5 +1,5 @@
 Package: illuminaio
-Version: 0.7.1
+Version: 0.7.2
 Title: Parsing Illumina microarray output files
 Description: Tools for parsing Illuminas microarray output files, including IDAT.	
 Authors@R: c(person("Keith", "Baggerly", role = "aut"),
@@ -12,4 +12,5 @@ Authors@R: c(person("Keith", "Baggerly", role = "aut"),
 Suggests: RUnit, BiocGenerics, IlluminaDataTestFiles (>= 1.0.2), BiocStyle
 Imports: base64
 License: GPL-2
+Url: https://github.com/HenrikBengtsson/illuminaio
 biocViews: Infrastructure, DataImport

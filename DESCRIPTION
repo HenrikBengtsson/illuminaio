@@ -12,5 +12,5 @@ Authors@R: c(person("Keith", "Baggerly", role = "aut"),
 Suggests: RUnit, BiocGenerics, IlluminaDataTestFiles (>= 1.0.2), BiocStyle
 Imports: base64
 License: GPL-2
-Url: https://github.com/HenrikBengtsson/illuminaio
+URL: https://github.com/HenrikBengtsson/illuminaio
 biocViews: Infrastructure, DataImport

@@ -1,6 +1,9 @@
 Package: illuminaio
 ===================
 
+Version: 0.9.1 [2015-02-25]
+o Modified code for reading encrypted idat files to cope with VeraCode data.
+
 Version: 0.9.0 [2014-10-13]
 o The version number was bumped for the Bioconductor devel version,
   which is now BioC v3.1 for R (>= 3.2.0).

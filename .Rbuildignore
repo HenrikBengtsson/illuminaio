@@ -11,3 +11,5 @@
 ^.check
 ^.test
 README.md
+^.*\.Rproj$
+^\.Rproj\.user$

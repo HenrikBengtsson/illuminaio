@@ -68,7 +68,7 @@ readIDAT_enc<- function(file) {
             b64String <- tmp[2]
 
             write.table(file = tf[1], x = b64String, row.names = FALSE, col.names = FALSE, quote = FALSE)
-            decode(input = tf[1], output = tf[2])
+            base64::decode(input = tf[1], output = tf[2])
 
             nDataPoints <- (3 * nchar(b64String) / 16) + 100
             data[[name]] <- readBin(tf[2], what = what[i-1], size = 4, n = as.integer(nDataPoints))
@@ -111,20 +111,24 @@ readIDAT_enc<- function(file) {
 extractRunInfo <- function(lines) {
     
     idx <- cbind(grep("<ProcessEntry>", lines), grep("</ProcessEntry>", lines))
-    
-    fields <- c("Name", "SoftwareApp", "Version", "Date", "Parameters")
-    res <- matrix(NA, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
-    
-    for(i in 1:nrow(idx)) {
-        entry <- lines[idx[i,1]:idx[i,2]]
-
-        for(f in fields) {
-            line <- entry[grep(paste("<", f, ">", sep = ""), entry)]
-            ## extract the string between tags
-            start <- gregexpr(">", line)[[1]][1] + 1
-            end <- gregexpr("<", line)[[1]][2] - 1
-            res[i, paste(f)] <- substring(line, start, end);
-        }
+    ## VeraCode data doesn't contain this run information, so we just return nothing
+    if(!nrow(idx)) {
+      res <- NULL
+    } else {  
+      fields <- c("Name", "SoftwareApp", "Version", "Date", "Parameters")
+      res <- matrix(NA, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
+      
+      for(i in 1:nrow(idx)) {
+          entry <- lines[idx[i,1]:idx[i,2]]
+  
+          for(f in fields) {
+              line <- entry[grep(paste("<", f, ">", sep = ""), entry)]
+              ## extract the string between tags
+              start <- gregexpr(">", line)[[1]][1] + 1
+              end <- gregexpr("<", line)[[1]][2] - 1
+              res[i, paste(f)] <- substring(line, start, end);
+          }
+      }
     }
     return(res)
 }
@@ -134,10 +138,20 @@ extractChipInfo <- function(lines) {
     res <- list();
     for(f in fields) {
         line <- lines[grep(paste("<", f, ">", sep = ""), lines)]
-        ## extract the string between tags
-        start <- gregexpr(">", line)[[1]][1] + 1
-        end <- gregexpr("<", line)[[1]][2] - 1
-        res[[ f ]] <- substring(line, start, end);
+        ## the field may not exist
+        if(!length(line)) {
+          start <- end <- NA
+        } else {
+          ## extract the string between tags
+          start <- gregexpr(">", line)[[1]][1] + 1
+          end <- gregexpr("<", line)[[1]][2] - 1
+        }
+        ## with VeraCode data these can be empty tags, so we'll return NULL in those cases
+        if(!is.na(end)) {
+          res[[ f ]] <- substring(line, start, end);
+        } else {
+          res[[ f ]] <- NULL
+        }
     }
     return(res)
 }

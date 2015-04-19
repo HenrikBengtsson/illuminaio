@@ -1,4 +1,4 @@
-# illuminaio: Parsing Illumina microarray output files
+# illuminaio: Parsing Illumina Microarray Output Files
 
 
 ## Installation

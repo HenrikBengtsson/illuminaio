@@ -36,7 +36,7 @@ getIlluminaAnnotationFile <- function(chipType, filename, force=FALSE) {
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Tests
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-if (Sys.getenv("_R_CHECK_FULL_") != "") {
+if (FALSE && Sys.getenv("_R_CHECK_FULL_") != "") {
 
 test_readBPM_bovineld <- function() {
   pathname <- getIlluminaAnnotationFile("bovineld", "bovineld_c.bpm")

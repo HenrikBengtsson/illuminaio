@@ -5,7 +5,7 @@ Description: Tools for parsing Illumina's microarray output files, including IDA
 Authors@R: c(person("Keith", "Baggerly", role = "aut"),
              person("Henrik", "Bengtsson", role = "aut"),
              person(c("Kasper", "Daniel"), "Hansen", role = c("aut", "cre"),
-                    email = "khansen@jhsph.edu"),
+                    email = "kasperdanielhansen@gmail.com"),
              person("Matt", "Ritchie", role = "aut"),
              person(c("Mike", "L."), "Smith", role = "aut"),
              person("Tim", "Triche Jr.", role = "ctb"))

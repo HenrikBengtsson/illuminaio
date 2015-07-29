@@ -1,6 +1,10 @@
 Package: illuminaio
 ===================
 
+Version: 0.11.1 [2015-07-29]
+o Updated the BiocViews field of DESCRIPTION.
+
+
 Version: 0.11.0 [2015-04-16]
 o The version number was bumped for the Bioconductor devel version,
   which is now BioC v3.2 for R (>= 3.3.0).

@@ -1,5 +1,5 @@
 Package: illuminaio
-Version: 0.11.0-9000
+Version: 0.11.1
 Title: Parsing Illumina Microarray Output Files
 Description: Tools for parsing Illuminas microarray output files, including IDAT.	
 Authors@R: c(person("Keith", "Baggerly", role = "aut"),
@@ -14,5 +14,5 @@ Imports: base64
 License: GPL-2
 URL: https://github.com/HenrikBengtsson/illuminaio
 BugReports: https://github.com/HenrikBengtsson/illuminaio/issues
-biocViews: Infrastructure, DataImport, Microarray, ProprietaryPlatforms, TwoChannel
+biocViews: Infrastructure, DataImport, Microarray, ProprietaryPlatforms
 

@@ -9,6 +9,7 @@
 ## REFERENCES:
 ## [1] http://support.illumina.com/downloads/infinium_bovineld_beadchip_product_files.ilmn
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if (FALSE && Sys.getenv("_R_CHECK_FULL_") != "") {
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Utility functions
@@ -36,13 +37,8 @@ getIlluminaAnnotationFile <- function(chipType, filename, force=FALSE) {
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Tests
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-if (FALSE && Sys.getenv("_R_CHECK_FULL_") != "") {
-
-test_readBPM_bovineld <- function() {
-  pathname <- getIlluminaAnnotationFile("bovineld", "bovineld_c.bpm")
-
-  data <- illuminaio::readBPM(pathname)
-  str(data)
-}
+pathname <- getIlluminaAnnotationFile("bovineld", "bovineld_c.bpm")
+data <- illuminaio::readBPM(pathname)
+str(data)
 
 } # if (Sys.getenv("_R_CHECK_FULL_") != "")

@@ -28,11 +28,8 @@ build_script:
 
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> master
  - travis-tool.sh install_r base64
  - travis-tool.sh install_bioc BiocGenerics BiocStyle IlluminaDataTestFiles
  - travis-tool.sh install_r RUnit

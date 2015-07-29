@@ -27,14 +27,9 @@ env:
   # R versions r-builder should test on (ignored by r-travis)
   matrix:
     - RVERSION=3.1.3
-<<<<<<< HEAD
-    - RVERSION=3.2.0
-    - RVERSION=devel _R_CHECK_FULL_=TRUE
-=======
     - RVERSION=3.2.1
     - RVERSION=devel _R_COVR_=TRUE _R_CHECK_FULL_=TRUE
     - RVERSION=devel _R_CHECK_USE_VALGRIND_=TRUE _R_CHECK_FULL_=TRUE
->>>>>>> master
 
 
 before_install:
@@ -59,11 +54,8 @@ install:
 
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> master
  - $RENV install_r base64
  - $RENV install_bioc BiocGenerics BiocStyle IlluminaDataTestFiles
  - $RENV install_r RUnit
@@ -74,13 +66,6 @@ script:
 
 after_success:
   - $RENV dump_logs_by_extension out
-<<<<<<< HEAD
-  - if [ -f ".coveralls.R" ]; then
-      $RENV install_devtools;
-      $RENV install_github HenrikBengtsson/covr;
-      curl -OL https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/covr-utils.R;
-      $RENV run_script .coveralls.R;
-=======
   - if [[ "$_R_COVR_" == "TRUE" && -f ".covr.R" ]]; then
       $RENV install_devtools;
       $RENV install_github jimhester/covr;
@@ -88,7 +73,6 @@ after_success:
     fi
   - if [[ "$_R_COVR_" == "TRUE" && -f ".covr.R" ]]; then
       $RENV run_script .covr.R;
->>>>>>> master
     fi
 
 after_failure:

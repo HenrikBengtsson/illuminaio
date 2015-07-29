@@ -10,10 +10,10 @@ biocLite('illuminaio')
 ```
 
 
-## Software quality
+## Software status
 
-| Resource:     | Bioonductor        | Travis CI        | Appveyor         |
-| ------------- | ------------------- | ---------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Linux_          | _Windows_        |
-| R CMD check   | status: [release](http://master.bioconductor.org/checkResults/release/bioc-LATEST/illuminaio), [devel](http://master.bioconductor.org/checkResults/devel/bioc-LATEST/illuminaio) | <a href="https://travis-ci.org/HenrikBengtsson/illuminaio"><img src="https://travis-ci.org/HenrikBengtsson/illuminaio.svg" alt="Build status"></a>    | <a href="https://ci.appveyor.com/project/HenrikBengtsson/illuminaio"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/illuminaio" alt="Build status"></a> |
-| Test coverage |                     |  |                  |
+| Resource:     | Bioconductor        | Travis CI     | Appveyor         |
+| ------------- | ------------------- | ------------- | ---------------- |
+| _Platforms:_  | _Multiple_          | _Linux_       | _Windows_        |
+| R CMD check   | <a href="http://bioconductor.org/checkResults/release/bioc-LATEST/illuminaio/"><img border="0" src="http://bioconductor.org/shields/build/release/bioc/illuminaio.svg" alt="Build status"></a> (release)</br><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/illuminaio/"><img border="0" src="http://bioconductor.org/shields/build/devel/bioc/illuminaio.svg" alt="Build status"></a> (devel) | <a href="https://travis-ci.org/HenrikBengtsson/illuminaio"><img src="https://travis-ci.org/HenrikBengtsson/illuminaio.svg" alt="Build status"></a> | <a href="https://ci.appveyor.com/project/HenrikBengtsson/illuminaio"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/illuminaio?svg=true" alt="Build status"></a> |
+| Test coverage |                     |    |                  |

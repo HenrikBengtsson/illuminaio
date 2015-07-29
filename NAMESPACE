@@ -1,3 +1,6 @@
+importFrom(utils, file_test)
+importFrom(utils, read.delim)
+importFrom(utils, write.table)
 importFrom(base64, decode)
 useDynLib(illuminaio)
 export(readIDAT, readBPM, readBGX)

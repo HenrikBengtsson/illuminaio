@@ -8,7 +8,7 @@ void decrypt(char **inFile, char **outFile) {
 
     const char idatKey[8] = { 127, 10, 73, -115, -47, -40, 25, -85 };
     char sessionKey[8];
-    int fSize, len, i, n;
+    int fSize, len, i;
     char *data;
 
     FILE *f = fopen(inFile[0], "rb");
@@ -24,7 +24,7 @@ void decrypt(char **inFile, char **outFile) {
                 the number of bytes in the next key */
         fseek(f, 9, SEEK_SET);
         /* read the key for this file */
-        n = fread(sessionKey, 8, 1, f);
+        fread(sessionKey, 8, 1, f);
 
         /* find the length of the data, minus the header */
         len = fSize - 17;
@@ -32,7 +32,7 @@ void decrypt(char **inFile, char **outFile) {
         /* allocate memory and read data */
         data = (char *)calloc(len, sizeof(char));
         memset(data, 0, len);
-        n = fread(data, len, 1, f);
+        fread(data, len, 1, f);
 
         fclose(f);
 

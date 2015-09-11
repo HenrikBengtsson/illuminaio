@@ -41,18 +41,40 @@ readIDAT_nonenc <- function(file) {
         ## string observed in the wild has been of length 6,264 with
         ## two length bytes.
         ##
-        ## [This last part is to be implemented. /HB 2011-03-28]
-        ## [Added protection + informative error for this. /HB 2015-09-11]
-        n <- readByte(con, n=1)
-        ## High-bit of first length byte
-        hibit <- (n %/% 128)
-        if (hibit == 0) {
-            readChar(con, nchars=n)
-        } else {
-            m <- readByte(con, n=1) ## Additional number of 128-byte blocks
-            stop(sprintf("NOT YET IMPLEMENTED (n=%d, m=%d): We're sorry, but readIDAT() can not read IDAT files containing strings of length 128 character or more.  Please report this problem the maintainer (%s) of the illuminaio package.  It would be helpful if you also could share the problematic IDAT file: %s", n, m, packageDescription("illuminaio")$Maintainer, file))
+        ## EXAMPLES: by HB (2015-09-11)
+        ## Length   Len bytes  Iterations (n, m, k, shift)
+        ## 1        (1)
+        ## 127      (127)       -> n=128
+        ## 128      (128,1)     -> n=0  ,m=1  ,shift=7, k=128 -> n=128
+        ## 255      (255,1)     -> n=128,m=1  ,shift=7, k=128 -> n=255
+        ## 256      (128,2)     -> n=0  ,m=2  ,shift=7, k=256 -> n=256
+        ## 257      (129,2)     -> n=1  ,m=2  ,shift=7, k=256 -> n=257
+        ## 512      (128,4)     -> n=0  ,m=4  ,shift=7, k=512 -> n=512
+        ## 81921    (129,128,5) -> n=1  ,m=128,shift=7, k=0 -> n=1+0=1
+        ##                      -> n=0  ,m=5  ,shift=14,k=81920
+        ##                                              -> n=1+81920=81921
+
+        ## Parse the number of characters to read
+        m <- readByte(con, n=1)
+        n <- m %% 128
+
+        shift <- 0L
+        while (m %/% 128 == 1) {
+            ## Read next length byte ...
+            m <- readByte(con, n=1)
+
+            ## ... which represents the next 7 hi-bits
+            shift <- shift + 7L
+            k <- (m %% 128) * 2^shift
+
+            ## Total number of bytes to read
+            n <- n + k
         }
+
+        ## Now read all bytes/characters
+        readChar(con, nchars=n)
     }
+
     readField <- function(con, field) {
         switch(field,
                "IlluminaID" = readInt(con = con, n=nSNPsRead),

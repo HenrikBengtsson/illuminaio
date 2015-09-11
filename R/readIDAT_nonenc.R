@@ -2,34 +2,79 @@ readIDAT_nonenc <- function(file) {
     readByte <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=1, endian="little", signed=FALSE)
     }
-    
+
     readShort <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=2, endian="little", signed=FALSE)
     }
-    
+
     readInt <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=4, endian="little", signed=TRUE)
     }
-    
+
     readLong <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=8, endian="little", signed=TRUE)
     }
-    
+
     readString <- function(con, ...) {
-        ## From [1]:
-        ## String data are encoded as a sequence of one or more length bytes 
-        ## followed by the specified number of data bytes.
+        ## From [1] https://code.google.com/p/glu-genetics/source/browse/glu/lib/illumina.py#86:
+        ## String data are encoded as a sequence of one or more length
+        ## bytes followed by the specified number of data bytes.
         ##
-        ## If the high-bit of the first length byte is set, then a second 
-        ## length byte follows with the number of additional 128 character 
-        ## blocks.  This acommodates strings up to length 16,384 (128**2) 
-        ## without ambiguity.  It is unknown of this scheme scales to additional
-        ## length bytes, since no strings longer than 6,264 bytes have been 
-        ## observed in the wild.
-        ## [This last part is to be implemented. /HB 2011-03-28]
-        n <- readByte(con, n=1)
+        ## The lower 7 bits of each length byte encodes the bits that
+        ## comprise the length of the following byte string.  When the
+        ## most significant bit it set, then an additional length byte
+        ## follows with 7 additional high bits to be added to the current
+        ## length.  The following string lengths are accommodated by
+        ## increasing sequences of length bytes:
+        ##
+        ## length  maximum
+        ## bytes   length
+        ## ------  --------
+        ##   1       127 B
+        ##   2        16 KB
+        ##   3         2 MB
+        ##   4       256 MB
+        ##   5        32 GB
+        ##
+        ## While this seems like a sensible progression, there is some
+        ## uncertainty about this interpretation, since the longest of
+        ## string observed in the wild has been of length 6,264 with
+        ## two length bytes.
+        ##
+        ## EXAMPLES: by HB (2015-09-11)
+        ## Length   Len bytes  Iterations (n, m, k, shift)
+        ## 1        (1)
+        ## 127      (127)       -> n=128
+        ## 128      (128,1)     -> n=0  ,m=1  ,shift=7, k=128 -> n=128
+        ## 255      (255,1)     -> n=128,m=1  ,shift=7, k=128 -> n=255
+        ## 256      (128,2)     -> n=0  ,m=2  ,shift=7, k=256 -> n=256
+        ## 257      (129,2)     -> n=1  ,m=2  ,shift=7, k=256 -> n=257
+        ## 512      (128,4)     -> n=0  ,m=4  ,shift=7, k=512 -> n=512
+        ## 81921    (129,128,5) -> n=1  ,m=128,shift=7, k=0 -> n=1+0=1
+        ##                      -> n=0  ,m=5  ,shift=14,k=81920
+        ##                                              -> n=1+81920=81921
+
+        ## Parse the number of characters to read
+        m <- readByte(con, n=1)
+        n <- m %% 128
+
+        shift <- 0L
+        while (m %/% 128 == 1) {
+            ## Read next length byte ...
+            m <- readByte(con, n=1)
+
+            ## ... which represents the next 7 hi-bits
+            shift <- shift + 7L
+            k <- (m %% 128) * 2^shift
+
+            ## Total number of bytes to read
+            n <- n + k
+        }
+
+        ## Now read all bytes/characters
         readChar(con, nchars=n)
     }
+
     readField <- function(con, field) {
         switch(field,
                "IlluminaID" = readInt(con = con, n=nSNPsRead),
@@ -58,7 +103,7 @@ readIDAT_nonenc <- function(file) {
                    RunInfo <- matrix(naValue, nrow=nRunInfoBlocks, ncol=5)
                    colnames(RunInfo) <- c("RunTime", "BlockType", "BlockPars",
                                           "BlockCode", "CodeVersion")
-                   for (ii in 1:2) { 
+                   for (ii in seq_len(nRunInfoBlocks)) {
                        for (jj in 1:5) {
                            RunInfo[ii,jj] <- readString(con = con)
                        }
@@ -70,7 +115,7 @@ readIDAT_nonenc <- function(file) {
 
     if(! (is.character(file) || try(isOpen(file))))
         stop("argument 'file' needs to be either a character or an open, seekable connection")
-    
+
     if(is.character(file)) {
         stopifnot(length(file) == 1)
         file <- path.expand(file)
@@ -96,23 +141,23 @@ readIDAT_nonenc <- function(file) {
     if (magic != "IDAT") {
         stop("Cannot read IDAT file. File format error. Unknown magic: ", magic)
     }
-    
+
     ## Read IDAT file format version
     version <- readLong(con, n=1)
     if (version < 3) {
         stop("Cannot read IDAT file. Unsupported IDAT file format version: ", version)
     }
-        
+
     ## Number of fields
     nFields <- readInt(con, n=1)
-    
+
     fields <- matrix(0, nrow=nFields, ncol=3)
     colnames(fields) <- c("fieldCode", "byteOffset", "Bytes")
     for (ii in 1:nFields) {
         fields[ii,"fieldCode"] <- readShort(con, n=1)
         fields[ii,"byteOffset"] <- readLong(con, n=1)
     }
-    
+
     knownCodes <- c(
         "nSNPsRead"  = 1000,
         "IlluminaID" =  102,
@@ -134,7 +179,7 @@ readIDAT_nonenc <- function(file) {
         "Unknown.6"  =  410,
         "Unknown.7"  =  510
         )
-    
+
     nNewFields <- 1
     rownames(fields) <- paste("Null", 1:nFields)
     for (ii in 1:nFields) {
@@ -161,7 +206,7 @@ readIDAT_nonenc <- function(file) {
         seek(con, where = where, origin = "start")
         readField(con = con, field = xx)
     })
-    
+
     Unknowns <-
         list(MostlyNull=res$MostlyNull,
              MostlyA=res$MostlyA,
@@ -171,11 +216,11 @@ readIDAT_nonenc <- function(file) {
              Unknown.4=res$Unknown.4,
              Unknown.5=res$Unknown.5
              )
-    
+
     Quants <- cbind(res$Mean, res$SD, res$NBeads)
     colnames(Quants) <- c("Mean", "SD", "NBeads")
     rownames(Quants) <- as.character(res$IlluminaID)
-    
+
     res <- list(
         fileSize=fileSize,
         versionNumber=version,

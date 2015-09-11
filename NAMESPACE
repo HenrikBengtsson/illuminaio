@@ -1,4 +1,5 @@
 importFrom(utils, file_test)
+importFrom(utils, packageDescription)
 importFrom(utils, read.delim)
 importFrom(utils, write.table)
 importFrom(base64, decode)

@@ -25,14 +25,15 @@ install:
 # Adapt as necessary starting from here
 
 build_script:
+  - echo Current directory=%CD%
 
 
 
 
 
- - travis-tool.sh install_r base64
- - travis-tool.sh install_bioc BiocGenerics BiocStyle IlluminaDataTestFiles
- - travis-tool.sh install_r RUnit
+  - travis-tool.sh install_r base64
+  - travis-tool.sh install_bioc BiocGenerics BiocStyle IlluminaDataTestFiles
+  - travis-tool.sh install_r RUnit
 
 test_script:
   - travis-tool.sh run_tests

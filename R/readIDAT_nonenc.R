@@ -16,7 +16,7 @@ readIDAT_nonenc <- function(file) {
     }
 
     readString <- function(con, ...) {
-        ## From [1]:
+        ## From [1] (http://glu-genetics.googlecode.com/hg-history/1df9880cc1d5fd366fce0d72c3b0e24c55c2744e/glu/lib/illumina.py):
         ## String data are encoded as a sequence of one or more length bytes
         ## followed by the specified number of data bytes.
         ##
@@ -27,8 +27,16 @@ readIDAT_nonenc <- function(file) {
         ## length bytes, since no strings longer than 6,264 bytes have been
         ## observed in the wild.
         ## [This last part is to be implemented. /HB 2011-03-28]
+        ## [Added protection + informative error for this. /HB 2015-09-11]
         n <- readByte(con, n=1)
-        readChar(con, nchars=n)
+        ## High-bit of first length byte
+        hibit <- (n %/% 128)
+        if (hibit == 0) {
+            readChar(con, nchars=n)
+        } else {
+            m <- readByte(con, n=1) ## Additional number of 128-byte blocks
+            stop(sprintf("NOT YET IMPLEMENTED (n=%d, m=%d): We're sorry, but readIDAT() can not read IDAT files containing strings of length 128 character or more.  Please report this problem the maintainer (%s) of the illuminaio package.  It would be helpful if you also could share the problematic IDAT file: %s", n, m, packageDescription("illuminaio")$Maintainer, file))
+        }
     }
     readField <- function(con, field) {
         switch(field,

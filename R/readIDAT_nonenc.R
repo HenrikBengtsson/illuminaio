@@ -16,16 +16,31 @@ readIDAT_nonenc <- function(file) {
     }
 
     readString <- function(con, ...) {
-        ## From [1] (http://glu-genetics.googlecode.com/hg-history/1df9880cc1d5fd366fce0d72c3b0e24c55c2744e/glu/lib/illumina.py):
-        ## String data are encoded as a sequence of one or more length bytes
-        ## followed by the specified number of data bytes.
+        ## From [1] https://code.google.com/p/glu-genetics/source/browse/glu/lib/illumina.py#86:
+        ## String data are encoded as a sequence of one or more length
+        ## bytes followed by the specified number of data bytes.
         ##
-        ## If the high-bit of the first length byte is set, then a second
-        ## length byte follows with the number of additional 128 character
-        ## blocks.  This acommodates strings up to length 16,384 (128**2)
-        ## without ambiguity.  It is unknown of this scheme scales to additional
-        ## length bytes, since no strings longer than 6,264 bytes have been
-        ## observed in the wild.
+        ## The lower 7 bits of each length byte encodes the bits that
+        ## comprise the length of the following byte string.  When the
+        ## most significant bit it set, then an additional length byte
+        ## follows with 7 additional high bits to be added to the current
+        ## length.  The following string lengths are accommodated by
+        ## increasing sequences of length bytes:
+        ##
+        ## length  maximum
+        ## bytes   length
+        ## ------  --------
+        ##   1       127 B
+        ##   2        16 KB
+        ##   3         2 MB
+        ##   4       256 MB
+        ##   5        32 GB
+        ##
+        ## While this seems like a sensible progression, there is some
+        ## uncertainty about this interpretation, since the longest of
+        ## string observed in the wild has been of length 6,264 with
+        ## two length bytes.
+        ##
         ## [This last part is to be implemented. /HB 2011-03-28]
         ## [Added protection + informative error for this. /HB 2015-09-11]
         n <- readByte(con, n=1)

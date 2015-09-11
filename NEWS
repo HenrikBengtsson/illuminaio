@@ -1,6 +1,12 @@
 Package: illuminaio
 ===================
 
+Version: 0.11.1-9000 [2015-09-11]
+o BUG FIX: readIDAT() incorrectly assumed that there were exactly 
+  two blocks in RunInfo fields of non-encrypted (v3) IDAT files.
+  Thanks to Gordon Bean (GitHub @brazilbean) for reporting on this.
+
+
 Version: 0.11.1 [2015-07-29]
 o Updated the BiocViews field of DESCRIPTION.
 

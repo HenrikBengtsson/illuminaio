@@ -1,7 +1,7 @@
 Package: illuminaio
 ===================
 
-Version: 0.11.1-9000 [2015-09-11]
+Version: 0.11.2 [2015-09-11]
 o BUG FIX: readIDAT() can now read non-encrypted IDAT files with 
   strings longer than 127 characters.
 o BUG FIX: readIDAT() incorrectly assumed that there were exactly 

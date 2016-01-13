@@ -1,6 +1,11 @@
 Package: illuminaio
 ===================
 
+Version 1.13.1 [2016-01-12]
+o DEPRECATED: readBPM() is deprecated because it was only a stub
+  that never really worked. (Issues #5 and #6)
+
+
 Version: 1.13.0 [2015-10-23]
 o The version number was bumped for the Bioconductor devel version,
   which is now BioC v3.3 for R (>= 3.3.0).
@@ -17,7 +22,7 @@ o BUG FIX: readIDAT() can now read non-encrypted IDAT files with
 o BUG FIX: readIDAT() incorrectly assumed that there were exactly 
   two blocks in RunInfo fields of non-encrypted (v3) IDAT files.
   Thanks to Gordon Bean (GitHub @brazilbean) for reporting on and
-  contributing with code for the above two bugs.
+  contributing with code for the above two bugs. (Issue #2)
 
 
 Version: 0.11.1 [2015-07-29]

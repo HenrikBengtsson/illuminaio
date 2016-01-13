@@ -1,6 +1,10 @@
 Package: illuminaio
 ===================
 
+Version 0.13.1-9000 [2016-01-12]
+o ...
+
+
 Version 0.13.1 [2016-01-12]
 o DEPRECATED: readBPM() is deprecated because it was only a stub
   that never really worked. (Issues #5 and #6)

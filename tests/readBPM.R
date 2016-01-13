@@ -37,7 +37,11 @@ getIlluminaAnnotationFile <- function(chipType, filename, force=FALSE) {
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Tests
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-pathname <- getIlluminaAnnotationFile("bovineld", "bovineld_c.bpm")
+## pathname <- getIlluminaAnnotationFile("bovineld", "bovineld_c.bpm")
+
+path <- "annotationData/chipTypes/HumanMethylation450"
+filename <- "humanmethylation450_15017482_v-1-2.bpm"
+pathname <- file.path(path,filename)
 data <- illuminaio::readBPM(pathname)
 str(data)
 

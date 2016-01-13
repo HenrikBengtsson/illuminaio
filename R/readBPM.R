@@ -1,4 +1,6 @@
 readBPM <- function(file) {
+    .Deprecated(msg="readBPM() is deprecated since illuminaio 0.1.4 (January 2016), because its parser in invalid and broken. (Issue #6)")
+
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Local functions
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,18 +53,18 @@ readBPM <- function(file) {
 
     ## Assert file format
     prefixCheck <- readChar(con, nchars=3L) ## should be "BPM"
-##    if (prefixCheck != "BPM") {
-##        stop("Cannot read BPM file. File format error. Unknown magic: ", prefixCheck)
-##    }
+    if (prefixCheck != "BPM") {
+       stop("Cannot read BPM file. File format error. Unknown magic: ", prefixCheck)
+    }
 
     null.1 <- readByte(con)
     ## should be 1
 
     versionNumber <- readInt(con, n=1L)
     ## should be 4
-##    if (versionNumber != 4L) {
-##        stop("Cannot read BPM file. Unsupported BPM file format version: ", versionNumber)
-##    }
+    if (versionNumber != 4L) {
+      stop("Cannot read BPM file. Unsupported BPM file format version: ", versionNumber)
+    }
 
     chipType <- readString(con)
 
@@ -72,6 +74,9 @@ readBPM <- function(file) {
 
     entriesByteOffset <- seek(con)
     nEntries <- readInt(con, n=1L)
+    if (!is.finite(nEntries) || nEntries < 0) {
+       stop("Cannot read BPM file. File format error. Invalid number of entries to read: ", nEntries)
+    }
 
     if (FALSE) {
         snpIndexByteOffset <- seek(con)

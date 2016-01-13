@@ -5,7 +5,10 @@
 \title{Low-level function to read BPM files}
 
 \description{
-    Reads BPM files (array design information) from Illumina arrays.
+  Reads BPM files (array design information) from Illumina arrays.
+
+  \emph{WARNING: This function is deprecated since illuminaio 0.1.4
+  (January 2016), because its parser is invalid/incorrect. (Issue #6)}
 }
 
 \usage{
@@ -23,6 +26,6 @@ readBPM(file)
 \author{
   Originally created by Keith Baggerly in 2008.
   Later included in the \pkg{crlmm} package.
-  Robustification and code cleanup by Henrik Bengtsson.
 }
 \keyword{IO}
+\keyword{internal}

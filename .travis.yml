@@ -40,7 +40,10 @@ matrix:
       r: release
     
 bioc_packages:
-  - BiocInstaller, BiocGenerics, BiocStyle, IlluminaDataTestFiles
+  - BiocInstaller
+  - BiocGenerics
+  - BiocStyle
+  - IlluminaDataTestFiles
 
 notifications:
   email:

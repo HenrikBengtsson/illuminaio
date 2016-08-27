@@ -4,7 +4,8 @@
 %\VignettePackage{illuminaio}
 \documentclass[12pt]{article}
 \usepackage{hyperref}
-\usepackage{fullpage}
+\usepackage{geometry}
+\geometry{margin=1in}
 \setlength{\parindent}{0cm}
 
 \newcommand{\Rfunction}[1]{{\texttt{#1}}}

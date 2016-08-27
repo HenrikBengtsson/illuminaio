@@ -36,8 +36,12 @@ matrix:
       env: NB='w/ valgrind' ## Just a label
     - os: osx
       r: oldrel
+      r_build_args: --no-build-vignettes  ## WORKAROUND: sectsty.sty missing
+      r_check_args: --as-cran --ignore-vignettes
     - os: osx
       r: release
+      r_build_args: --no-build-vignettes  ## WORKAROUND: sectsty.sty missing
+      r_check_args: --as-cran --ignore-vignettes
     
 bioc_packages:
   - BiocInstaller

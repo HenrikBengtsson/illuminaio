@@ -1,6 +1,10 @@
 Package: illuminaio
 ===================
 
+Version 0.15.1 [2016-08-27]
+o Now the package DLL is unloaded when the package is unloaded.
+
+
 Version: 0.15.0 [2015-05-03]
 o The version number was bumped for the Bioconductor devel version,
   which is now BioC v3.4 for R (>= 3.3.0).

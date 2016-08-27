@@ -1,7 +1,7 @@
 Package: illuminaio
 ===================
 
-Version 0.15.1-9000 [2016-08-26]
+Version 0.15.1 [2016-08-27]
 o Now the package DLL is unloaded when the package is unloaded.
 
 

@@ -38,7 +38,7 @@ matrix:
       r: oldrel
       latex: false
       r_build_args: --no-build-vignettes  ## WORKAROUND: sectsty.sty missing
-      r_check_args: --as-cran --ignore-vignettes
+      r_check_args: --as-cran --no-build-vignettes --no-vignettes
       env: NB='w/out vignettes' ## Just a label
     - os: osx
       r: release

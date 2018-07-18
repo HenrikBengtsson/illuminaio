@@ -7,3 +7,5 @@ useDynLib(illuminaio)
 export(readBGX)
 export(readBPM)
 export(readIDAT)
+useDynLib("illuminaio", .registration = TRUE, .fixes = "C_")
+

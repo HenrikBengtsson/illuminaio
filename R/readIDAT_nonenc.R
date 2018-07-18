@@ -1,4 +1,4 @@
-readIDAT_nonenc <- function(file) {
+readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     readByte <- function(con, n=1, ...) {
         readBin(con, what="integer", n=n, size=1, endian="little", signed=FALSE)
     }
@@ -115,6 +115,7 @@ readIDAT_nonenc <- function(file) {
 
     if(! (is.character(file) || try(isOpen(file))))
         stop("argument 'file' needs to be either a character or an open, seekable connection")
+    what <- match.arg(what)
 
     if(is.character(file)) {
         stopifnot(length(file) == 1)
@@ -196,6 +197,14 @@ readIDAT_nonenc <- function(file) {
 
     seek(con, where=fields["nSNPsRead", "byteOffset"], origin="start")
     nSNPsRead <- readInt(con, n=1)
+    if(what == "nSNPsRead")
+        return(nSNPsRead)
+    if(what == "IlluminaID") {
+        where <- fields["IlluminaID", "byteOffset"]
+        seek(con, where = where, origin = "start")
+        res <- readField(con = con, field = "IlluminaID")
+        return(as.character(res))
+    }
 
     res <- rownames(fields)
     names(res) <- res

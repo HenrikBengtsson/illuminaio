@@ -12,16 +12,16 @@ readIDAT(file, what = c("all", "IlluminaID", "nSNPsRead"))
 }
 
 \arguments{
-  \item{file}{character string specifying idat file to be read in.}
-  \item{what}{This allows the return of parts of the idat file, see
-  Value. This argument is only supported for non-encrypted idat files;
+  \item{file}{character string specifying IDAT file to be read in.}
+  \item{what}{This allows the return of parts of the IDAT file, see
+  Value. This argument is only supported for non-encrypted IDAT files;
   setting it to be different from default on an encrypted file throws an
   error.}
 }
 
 \details{
   This function returns a list containing summarised intensities and other
-  information extracted from a single .idat file.
+  information extracted from a single IDAT file.
 
   Thanks to Keith Baggerly for providing the first version of this code.
 

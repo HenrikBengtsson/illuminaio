@@ -3,10 +3,13 @@ Package: illuminaio
 
 Version: 0.23.1-9000 [2018-07-18]
 
- o The readIDAT function gains a what argument for unencrypted IDAT files.
-   This allows the fast return of the number of 'nSNPsRead' (number of probes
-   in file) and 'IlluminaID' (probenames). This is to allow fast handling of
-   IDAT files in the minfi package.
+NEW FEATURES:
+
+ o The readIDAT() function gains a 'what' argument (only for unencrypted IDAT
+   files).  This allows the fast return of the number of 'nSNPsRead' (number
+   of probes in file) and 'IlluminaID' (probenames). This is to allow fast
+   handling of IDAT files in the minfi package.
+   
 
 Version: 0.23.1 [2018-07-18]
 

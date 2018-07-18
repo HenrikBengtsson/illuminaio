@@ -1,172 +1,358 @@
 Package: illuminaio
 ===================
 
+Version: 0.23.1 [2018-07-18]
+
+SOFTWARE QUALITY:
+
+ o ROBUSTNESS: Now registering native routines.
+
+
+Version: 0.23.0 [2018-05-01]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.8 for R (>= 3.5.0).
+
+
+Version: 0.22.0 [2017-05-01]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.7 for R (>= 3.5.0).
+
+
+Version: 0.21.0 [2017-10-31]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.7 for R (>= 3.5.0).
+
+
+Version: 0.20.0 [2017-10-31]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.6 for R (>= 3.4.0).
+
+
+Version: 0.19.0 [2017-04-25]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.6 for R (>= 3.4.0).
+
+
+Version: 0.18.0 [2017-04-25]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.5 for R (>= 3.4.0).
+
+
+Version: 0.17.0 [2016-10-18]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.5 for R (>= 3.4.0).
+
+
+Version: 0.16.0 [2016-10-18]
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.4 for R (>= 3.3.1).
+
+
 Version 0.15.1 [2016-08-27]
-o Now the package DLL is unloaded when the package is unloaded.
+
+ o Now the package DLL is unloaded when the package is unloaded.
 
 
 Version: 0.15.0 [2015-05-03]
-o The version number was bumped for the Bioconductor devel version,
-  which is now BioC v3.4 for R (>= 3.3.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.4 for R (>= 3.3.0).
 
 
 Version: 0.14.0 [2015-05-03]
-o The version number was bumped for the Bioconductor release version,
-  which is now BioC v3.3 for R (>= 3.3.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.3 for R (>= 3.3.0).
 
 
 Version 0.13.1 [2016-01-12]
-o DEPRECATED: readBPM() is deprecated because it was only a stub
-  that never really worked. (Issues #5 and #6)
+
+DEPRECATED AND DEFUNCT:
+
+ o readBPM() is deprecated because it was only a stub that never really worked.
+   (Issues #5 and #6)
 
 
 Version: 0.13.0 [2015-10-23]
-o The version number was bumped for the Bioconductor devel version,
-  which is now BioC v3.3 for R (>= 3.3.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.3 for R (>= 3.3.0).
 
 
 Version: 0.12.0 [2015-10-13]
-o The version number was bumped for the Bioconductor release version,
-  which is now BioC v3.2 for R (>= 3.2.2).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.2 for R (>= 3.2.2).
 
 
 Version: 0.11.2 [2015-09-11]
-o BUG FIX: readIDAT() can now read non-encrypted IDAT files with 
-  strings longer than 127 characters.
-o BUG FIX: readIDAT() incorrectly assumed that there were exactly 
-  two blocks in RunInfo fields of non-encrypted (v3) IDAT files.
-  Thanks to Gordon Bean (GitHub @brazilbean) for reporting on and
-  contributing with code for the above two bugs. (Issue #2)
+
+BUG FIXES:
+
+ o readIDAT() can now read non-encrypted IDAT files with strings longer than
+   127 characters.
+
+ o readIDAT() incorrectly assumed that there were exactly two blocks in RunInfo
+   fields of non-encrypted (v3) IDAT files.  Thanks to Gordon Bean (GitHub
+   @brazilbean) for reporting on and contributing with code for the above two
+   bugs. (Issue #2)
 
 
 Version: 0.11.1 [2015-07-29]
-o Updated the BiocViews field of DESCRIPTION.
+
+NOTES:
+
+ o Updated the BiocViews field of DESCRIPTION.
 
 
 Version: 0.11.0 [2015-04-16]
-o The version number was bumped for the Bioconductor devel version,
-  which is now BioC v3.2 for R (>= 3.3.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.2 for R (>= 3.3.0).
 
 
 Version: 0.10.0 [2015-04-16]
-o The version number was bumped for the Bioconductor release version,
-  which is now BioC v3.1 for R (>= 3.2.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.1 for R (>= 3.2.0).
 
 
 Version: 0.9.1 [2015-02-25]
-o Modified code for reading encrypted idat files to cope with VeraCode data.
+
+NEW FEATURES:
+
+ o Modified code for reading encrypted idat files to cope with VeraCode data.
 
 
 Version: 0.9.0 [2014-10-13]
-o The version number was bumped for the Bioconductor devel version,
-  which is now BioC v3.1 for R (>= 3.2.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v3.1 for R (>= 3.2.0).
 
 
 Version: 0.8.0 [2014-10-13]
-o The version number was bumped for the Bioconductor release version,
-  which is now BioC v3.0 for R (>= 3.1.1).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v3.0 for R (>= 3.1.1).
 
 
 Version: 0.7.2 [2014-10-02]
-o Now on GitHub.
+
+NOTES:
+
+ o Now on GitHub.
 
 
 Version: 0.7.1 [2014-09-21]
-o The vignette now reads the GenomeStudio example file from the
-  IlluminaDataTestFiles package instead of the internet.
-o Updated CITATION.
-o Added citation to vignette.
+
+CODE REFACTORING:
+
+ o The vignette now reads the GenomeStudio example file from the
+   IlluminaDataTestFiles package instead of the internet.
+
+ o Updated CITATION.
+
+DOCUMENTATION:
+
+ o Added citation to vignette.
 
 
 Version: 0.7.0 [2014-04-11]
-o The version number was bumped for the Bioconductor devel version,
-  which is now BioC v2.15 for R (>= 3.1.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version, which is
+   now BioC v2.15 for R (>= 3.1.0).
 
 
 Version: 0.6.0 [2014-04-11]
-o The version number was bumped for the Bioconductor release version,
-  which is now BioC v2.14 for R (>= 3.1.0).
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version, which is
+   now BioC v2.14 for R (>= 3.1.0).
  
 
 Version: 0.5.6 [2014-03-10]
-o Added a CITATION file, cf. citation("illuminaio").
+
+NEW FEATURES:
+
+ o Added a CITATION file, cf. citation("illuminaio").
 
 
 Version: 0.5.5 [2014-01-19]
-o Added support for encrypted IDAT files where not all data fields are of the
-  same length e.g. HumanHap550 v1.
+
+ o Added support for encrypted IDAT files where not all data fields are of the
+   same length, e.g. HumanHap550 v1.
 
 
 Version: 0.5.2 [2013-11-05]
-o moved testData to IlluminaDataTestFiles.
-o Added unitTests for encrypted IDATs.
+
+CODE REFACTORING:
+
+ o Moved testData to IlluminaDataTestFiles.
+
+SOFTWARE QUALITY:
+
+ o Added unitTests for encrypted IDATs.
 
 
 Version: 0.5.1 [2013-11-04]
-o Resshuffled internal code in readIDAT_nonenc so that seek() is always forward based.
+
+CODE REFACTORING:
+
+ o Resshuffled internal code in readIDAT_nonenc() so that seek() is always
+   forward based.
+
 
 Version: 0.5.0 [2013-10-14; BioC 2.14]
-o The version number was bumped for the Bioconductor devel version.
-o No updates.
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version.
+
+ o No updates.
 
 
 Version: 0.4.0 [2013-10-14; BioC 2.13]
-o The version number was bumped for the Bioconductor release version.
-o No updates.
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version.
+
+ o No updates.
 
 
 Version: 0.3.9 [2013-09-13]
-o Added vignette giving examples of usage and demonstrating comparison
-  with GenomeStudio output;
+
+DOCUMENTATION:
+
+ o Added vignette giving examples of usage and demonstrating comparison with
+   GenomeStudio output.
 
 
 Version: 0.3.8 [2013-09-12]
-o Bug fixes, renaming of readIDAT_bin to readIDAT_nonenc.
+
+SOFTWARE QUALITY:
+
+ o Bug fixes, renaming of readIDAT_bin() to readIDAT_nonenc().
 
 
 Version: 0.3.6 [2013-08-21]
-o Added one parent function readIDAT which checks file format
-  and dispatches to the relevant subfunction.
+
+NEW FEATURES:
+
+ o Added one parent function readIDAT() which checks file format and dispatches
+   to the relevant subfunction.
 
 
 Version: 0.3.5 [2013-08-02]
-o Cleaned up internal code of readBPM().
-o ROBUSTNESS: Added unit tests for readBPM().  Note that these are
-  only run if environment variable '_R_CHECK_FULL_' is set, i.e.
-  they will *not* be perfomed on the Bioconductor servers.
+
+CODE REFACTORING:
+
+ o Cleaned up internal code of readBPM().
+
+SOFTWARE QUALITY:
+
+ o ROBUSTNESS: Added unit tests for readBPM().  Note that these are only run
+   if environment variable '_R_CHECK_FULL_' is set, i.e. they will *not* be
+   performed on the Bioconductor servers.
 
 
 Version: 0.3.0 [2013-04-03; BioC 2.13]
-o The version number was bumped for the Bioconductor devel version.
-o No updates.
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor devel version.
 
 
 Version: 0.2.0 [2013-04-03; BioC 2.12]
-o The version number was bumped for the Bioconductor release version.
-o No updates.
+
+NOTES:
+
+ o The version number was bumped for the Bioconductor release version.
 
 
 Version: 0.1.5 [2012-11-28]
-o Fixed typos in help for readBPM() and readIDAT().
+
+DOCUMENTATION:
+
+ o Fixed typos in help for readBPM() and readIDAT().
 
 
 Version: 0.1.4 [2012-11-27]
-o Exporting readBPM().
+
+NEW FEATURES:
+
+ o Add/exporting readBPM().
 
 
 Version: 0.1.3 [2012-11-12]
-o Added system tests for readIDAT() on example files from 'hapmap370k' package.
+
+SOFTWARE QUALITY:
+
+ o Added system tests for readIDAT() on example files from 'hapmap370k' package.
 
 
 Version: 0.1.2 [2012-11-07]
-o Now readIDAT() guarantees to close any connections it opens.  
-  Also tidied up its code by defining local read functions.
+
+BUG FIXES:
+
+ o readIDAT() would not close connections it opened if there was an error. Now
+   it guarantees to close any connections it opens.
 
 
 Version: 0.1.1 [2012-1]
-o Added system tests for readIDAT() on example files from 'minfiData' package.
+
+SOFTWARE QUALITY:
+
+ o Added system tests for readIDAT() on example files from 'minfiData' package.
 
 
 Version: 0.1.0 [2012-10-09]
-o Package added to the BioC repository.
-o Created.
+
+SIGNIFICANT CHANGES:
+
+ o Package added to the Bioconductor repository.
+
+ o Created.

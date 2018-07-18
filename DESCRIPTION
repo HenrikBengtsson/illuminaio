@@ -1,5 +1,5 @@
 Package: illuminaio
-Version: 0.23.1
+Version: 0.23.2
 Title: Parsing Illumina Microarray Output Files
 Imports:
     base64
@@ -20,3 +20,4 @@ License: GPL-2
 URL: https://github.com/HenrikBengtsson/illuminaio
 BugReports: https://github.com/HenrikBengtsson/illuminaio/issues
 biocViews: Infrastructure, DataImport, Microarray, ProprietaryPlatforms
+RoxygenNote: 6.0.1

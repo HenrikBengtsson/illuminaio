@@ -8,16 +8,20 @@
 }
 
 \usage{
-readIDAT(file)
+readIDAT(file, what = c("all", "IlluminaID", "nSNPsRead"))
 }
 
 \arguments{
-  \item{file}{character string specifying idat file to be read in.}
+  \item{file}{character string specifying IDAT file to be read in.}
+  \item{what}{This allows the return of parts of the IDAT file, see
+  Value. This argument is only supported for non-encrypted IDAT files;
+  setting it to be different from default on an encrypted file throws an
+  error.}
 }
 
 \details{
   This function returns a list containing summarised intensities and other
-  information extracted from a single .idat file.
+  information extracted from a single IDAT file.
 
   Thanks to Keith Baggerly for providing the first version of this code.
 
@@ -30,6 +34,8 @@ readIDAT(file)
   file header and calling the appropriate reading routine internally.
 
   The function supports reading gzipped, unencrypted IDATs.
+
+  The use of the \code{what} argument is for package writers.
 }
 
 \value{
@@ -54,6 +60,11 @@ readIDAT(file)
   of the file and as such is not returned in the \code{Quants} entry.  Such
   fields will be placed here.  So far only the HumanHap550 v1 BeadChip has exhibited 
   this property.
+
+  In case \code{what} is set to \code{nSNPsRead} the function returns an
+  integer equal to this field.  In case \code{what} is set to
+  \code{IlluminaID} the function returns a character vector containing
+  the IDs.
 }
 
 \references{

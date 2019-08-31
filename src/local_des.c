@@ -24,7 +24,9 @@ void decrypt(char **inFile, char **outFile) {
                 the number of bytes in the next key */
         fseek(f, 9, SEEK_SET);
         /* read the key for this file */
-        fread(sessionKey, 8, 1, f);
+        if(fread(sessionKey, 8, 1, f) != 1) {
+            error("Error reading session key\n");
+        }
 
         /* find the length of the data, minus the header */
         len = fSize - 17;
@@ -32,7 +34,9 @@ void decrypt(char **inFile, char **outFile) {
         /* allocate memory and read data */
         data = (char *)calloc(len, sizeof(char));
         memset(data, 0, len);
-        fread(data, len, 1, f);
+        if(fread(data, len, 1, f) != 1) {
+            error("Error reading IDAT data\n");
+        }
 
         fclose(f);
 

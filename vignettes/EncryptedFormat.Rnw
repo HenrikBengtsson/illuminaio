@@ -68,7 +68,7 @@ Decryption routines are included with the package and are based on code taken fr
 
 \section*{Data}
 
-All the IDATs that I've decrypted have contained the same ten fields of summarized bead data.  I don't think the format is documented anywhere so I've extrapolated what I think is in each.  Users of GenomeStudio might have a better idea of what these are, but I've tried to work them out from looking at the bead-level data. In most cases the values appear to be derived after outliers have been removed.  
+All the IDAT files that I've decrypted have contained the same ten fields of summarized bead data.  I don't think the format is documented anywhere so I've extrapolated what I think is in each.  Users of GenomeStudio might have a better idea of what these are, but I've tried to work them out from looking at the bead-level data. In most cases the values appear to be derived after outliers have been removed.  
 
 \begin{itemize}
     \item MeanBinData - Mean intensity of non-outlying beads.

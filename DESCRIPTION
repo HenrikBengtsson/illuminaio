@@ -1,5 +1,5 @@
 Package: illuminaio
-Version: 0.27.1
+Version: 0.28.0
 Title: Parsing Illumina Microarray Output Files
 Imports:
     base64

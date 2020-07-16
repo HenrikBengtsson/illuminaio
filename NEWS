@@ -3,14 +3,14 @@ Package: illuminaio
 
 Version: 0.31.0-9000 [2020-07-15]
 
-ROBUSTNESS:
+UPDATES:
 
- * readIDAT() uses explicit stringsAsFactors=FALSE internally.
- 
  * Error messages produced by readIDAT() when failing decrypt no longer appends
    an extra newline at the end.
 
-BUG FIXES:
+ * readIDAT() uses explicit stringsAsFactors=FALSE internally.
+ 
+DOCUMENTATION:
 
  * The BibTeX URL reported by citation(package="illuminaio") was broken.
  

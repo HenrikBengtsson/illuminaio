@@ -152,7 +152,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     ## Number of fields
     nFields <- readInt(con, n=1)
 
-    fields <- matrix(0, nrow=nFields, ncol=3)
+    fields <- matrix(0L, nrow=nFields, ncol=3)
     colnames(fields) <- c("fieldCode", "byteOffset", "Bytes")
     for (ii in 1:nFields) {
         fields[ii,"fieldCode"] <- readShort(con, n=1)

@@ -1,10 +1,29 @@
 Package: illuminaio
 ===================
 
-Version: 0.27.1-9000 [2018-07-18]
+Version: 0.31.0 [2020-04-27]
 
- * ...
- 
+NOTES:
+
+ * The version number was bumped for the Bioconductor develop version, which is
+   now BioC 3.12 for R (>= 4.0.0).
+
+
+Version: 0.30.0 [2020-04-27]
+
+NOTES:
+
+ * The version number was bumped for the Bioconductor release version, which is
+   now BioC 3.11 for R (>= 4.0.0).
+
+
+Version: 0.28.0 [2019-10-29]
+
+NOTES:
+
+ * The version number was bumped for the Bioconductor release version, which is
+   now BioC 3.10 for R (>= 3.6.1).
+
 
 Version: 0.27.1 [2019-08-19]
 
@@ -15,17 +34,23 @@ SOFTWARE QUALITY:
 
 Version: 0.27.0 [2019-05-02]
 
+NOTES:
+
  * The version number was bumped for the Bioconductor devel version, which is
    now BioC 3.10 for R (>= 3.6.0).
 
 
 Version: 0.26.0 [2019-05-02]
 
+NOTES:
+
  * The version number was bumped for the Bioconductor release version, which is
    now BioC 3.9 for R (>= 3.6.0).
 
 
 Version: 0.25.0 [2018-10-30]
+
+NOTES:
 
  * The version number was bumped for the Bioconductor devel version, which is
    now BioC 3.9 for R (>= 3.6.0).
@@ -34,7 +59,7 @@ Version: 0.25.0 [2018-10-30]
 Version: 0.24.0 [2018-10-30]
 
  * The version number was bumped for the Bioconductor release version, which is
-   now BioC 3.8 for R (>= 3.5.0).
+   now BioC 3.8 for R (>= 3.5.1).
 
 
 Version: 0.23.2 [2018-07-18]

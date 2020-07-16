@@ -22,11 +22,9 @@ before_install:
 matrix:
   include:
     - os: linux
-      r: oldrel
+      r: bioc-release
     - os: linux
-      r: release
-    - os: linux
-      r: devel
+      r: bioc-devel
       env:
         - R_KEEP_PKG_SOURCE=yes
         - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
@@ -35,7 +33,7 @@ matrix:
         - _R_CHECK_LENGTH_1_CONDITION_=true
         - _R_CHECK_LENGTH_1_LOGIC2_=true
     - os: linux
-      r: release
+      r: bioc-release
       r_check_args: --as-cran --use-valgrind
       addons:
         apt:
@@ -43,21 +41,21 @@ matrix:
           - valgrind
       env: NB='w/ valgrind' ## Just a label
     - os: osx
-      r: oldrel
+      r: bioc-release
       latex: false
       r_build_args: --no-build-vignettes  ## WORKAROUND: sectsty.sty missing
       r_check_args: --as-cran --no-build-vignettes --no-vignettes
       before_install:
       env: NB='w/out vignettes' ## Just a label
     - os: osx
-      r: release
+      r: bioc-devel
       latex: false
       r_build_args: --no-build-vignettes  ## WORKAROUND: sectsty.sty missing
       r_check_args: --as-cran --ignore-vignettes
       env: NB='w/out vignettes' ## Just a label
       before_install:
     - os: linux
-      r: release
+      r: bioc-release
       r_check_args: --no-build-vignettes --no-codoc --no-examples --no-tests --no-manual --ignore-vignettes
       r_packages:
         - covr

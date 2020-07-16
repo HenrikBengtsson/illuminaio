@@ -98,7 +98,7 @@ readIDAT_enc<- function(file) {
             Barcode=chipInfo$BarCode,
             Section=chipInfo$SectionLabel,
             ChipType=chipInfo$SentrixFormat,
-            Quants=as.data.frame(data),
+            Quants=as.data.frame(data, stringsAsFactors=FALSE),
             RunInfo=runInfo
            )
     if(!is.null(extra)) 

@@ -5,6 +5,8 @@ Version: 0.31.0-9000 [2020-07-15]
 
 NOTES:
 
+ * readIDAT() uses explicit stringsAsFactors=FALSE internally.
+ 
  * Error messages produced by readIDAT() when failing decrypt no longer appends
    an extra newline at the end.
 

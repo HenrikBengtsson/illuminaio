@@ -1,5 +1,4 @@
-readIDAT_enc<- function(file) {
-
+readIDAT_enc <- function(file) {
     if(!file.exists(file)) {
         stop("Unable to find file ", file)
     }
@@ -95,16 +94,16 @@ readIDAT_enc<- function(file) {
     chipInfo <- extractChipInfo(r)
     
     res <- list(
-            Barcode=chipInfo$BarCode,
-            Section=chipInfo$SectionLabel,
-            ChipType=chipInfo$SentrixFormat,
-            Quants=as.data.frame(data, stringsAsFactors=FALSE),
-            RunInfo=runInfo
+             Barcode=chipInfo$BarCode,
+             Section=chipInfo$SectionLabel,
+             ChipType=chipInfo$SentrixFormat,
+             Quants=as.data.frame(data, stringsAsFactors=FALSE),
+             RunInfo=runInfo
            )
     if(!is.null(extra)) 
         res[["Extra"]] <- extra
     
-    return(res)
+    res
     
 }
 
@@ -130,12 +129,14 @@ extractRunInfo <- function(lines) {
           }
       }
     }
-    return(res)
+    
+    res
 }
         
 extractChipInfo <- function(lines) {
     fields <- c("BarCode", "SentrixFormat", "SectionLabel")
     res <- list()
+    
     for(f in fields) {
         line <- lines[grep(paste("<", f, ">", sep = ""), lines)]
         ## the field may not exist
@@ -153,6 +154,7 @@ extractChipInfo <- function(lines) {
           res[[ f ]] <- NULL
         }
     }
-    return(res)
+    
+    res
 }
     

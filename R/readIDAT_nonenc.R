@@ -230,7 +230,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     colnames(Quants) <- c("Mean", "SD", "NBeads")
     rownames(Quants) <- as.character(res$IlluminaID)
 
-    res <- list(
+    list(
         fileSize=fileSize,
         versionNumber=version,
         nFields=nFields,
@@ -243,6 +243,5 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         ChipType=res$ChipType,
         RunInfo=res$RunInfo,
         Unknowns=Unknowns
-        )
-    res
+    )
 }

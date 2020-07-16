@@ -108,17 +108,16 @@ readBPM <- function(file) {
                         normIDByteOffset=normIDByteOffset,
                         newBlockByteOffset=newBlockByteOffset)
 
-    allStuff <- list(prefixCheck=prefixCheck,
-                     null.1=null.1,
-                     versionNumber=versionNumber,
-                     chipType=chipType,
-                     null.2=null.2,
-                     csvLines=csvLines,
-                     nEntries=nEntries,
-                     ##snpIndex=snpIndex,
-                     ##snpNames=snpNames,
-                     normID=normID,
-                     newBlock=newBlock,
-                     byteOffsets=byteOffsets)
-    allStuff
+    list(prefixCheck=prefixCheck,
+         null.1=null.1,
+         versionNumber=versionNumber,
+         chipType=chipType,
+         null.2=null.2,
+         csvLines=csvLines,
+         nEntries=nEntries,
+         ##snpIndex=snpIndex,
+         ##snpNames=snpNames,
+         normID=normID,
+         newBlock=newBlock,
+         byteOffsets=byteOffsets)
 } # readBPM()

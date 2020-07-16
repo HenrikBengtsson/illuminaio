@@ -20,8 +20,5 @@ readBGX <- function(file) {
     controls <- read.delim(con, sep="\t", header=TRUE, skip = 1, 
                          nrows=nControls, quote="", stringsAsFactors=FALSE)
   
-    allStuff <- list(probes = probes,
-                   controls = controls)
-  
-    return(allStuff)
+    list(probes = probes, controls = controls)
 }

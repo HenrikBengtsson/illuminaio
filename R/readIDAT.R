@@ -40,5 +40,5 @@ readIDAT <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         stop("Cannot read IDAT file. Unsupported IDAT file format version: ", version)
     }
     
-    return( res )
+    res
 }

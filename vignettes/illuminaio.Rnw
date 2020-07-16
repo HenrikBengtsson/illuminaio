@@ -14,7 +14,7 @@ BiocStyle::latex()
 
 \section*{Introduction}
 
-\Biocpkg{illuminaio} is designed to provide a single package containing routines for importing data from Illumina BeadArray platforms into \R{}.  The intention is for \Biocpkg{illuminaio} to provide developers of downstream analysis packages with a mechanism for extracting all possible information from IDAT files in a relatively straight forward fashion.  The choice of data to retain and how it should be stored is then left for the end user to decide.
+\Biocpkg{illuminaio} is designed to provide a single package containing routines for importing data from Illumina BeadArray platforms into \R{}.  The intention is for \Biocpkg{illuminaio} to provide developers of downstream analysis packages with a mechanism for extracting all possible information from IDAT files in a relatively straightforward fashion.  The choice of data to retain and how it should be stored is then left for the end user to decide.
 
 This vignette gives examples of how data files can be read and discusses the values that are returned, which will vary depending upon the BeadArray platform used.  It also demonstrates that the values extracted by \Biocpkg{illuminaio} are the same as those returned when using Illumina's own GenomeStudio software.
 
@@ -49,7 +49,7 @@ idatData <- idat$Quants
 head(idatData)
 @ 
 
-We can see that for this expression array a total of 10 values are returned for each bead-type.  The column headers are pulled directly from the IDAT file and do not directly match with how things are commonly labelled in GenomeStudio, although for the most part they are relatively easy to decipher.  The \texttt{CodeBinData, MeanBinData} and \texttt{NumGoodBeadsBinData} columns are those that are reported by default in GenomeStudio and correspond the ProbeID, AVG\_Signal and NBEADS values respectively.  \texttt{DevBinData} gives the standard deviation for the bead-type and can be used the generate the BEAD\_STDERR values GenomeStudio reports.  The remaining columns give additional information and are discussed in the file \texttt{EncryptedFormat.pdf} that also accompanies this package.
+We can see that for this expression array a total of 10 values are returned for each bead-type.  The column headers are pulled directly from the IDAT file and do not directly match with how things are commonly labeled in GenomeStudio, although for the most part they are relatively easy to decipher.  The \texttt{CodeBinData, MeanBinData} and \texttt{NumGoodBeadsBinData} columns are those that are reported by default in GenomeStudio and correspond the ProbeID, AVG\_Signal and NBEADS values respectively.  \texttt{DevBinData} gives the standard deviation for the bead-type and can be used the generate the BEAD\_STDERR values GenomeStudio reports.  The remaining columns give additional information and are discussed in the file \texttt{EncryptedFormat.pdf} that also accompanies this package.
 
 \subsection*{Genotyping Array}
 
@@ -106,7 +106,7 @@ hist(idatData[, "MeanBinData"]- gStudio[, "X4343238080_A.AVG_Signal"],
 @ 
 \incfig{illuminaio-figureComparingValues}{\textwidth}{}{Comparing values obtained by \Biocpkg{illuminaio} and GenomeStudio}
 
-The first plot shows the summarized bead-intensity values extracted by \Biocpkg{illuminaio} on the horizontal axis against Genomestudio's values on the vertical axis.  We can see they are highly similar.  However, they are not identical, as shown by the third line above.  The second plot visualises the distribution of the differences between the two sets of values, showing them to be small.  These are most likely introduced by rounding performed by GenomeStudio that is not carried out by \Biocpkg{illuminaio}.
+The first plot shows the summarized bead-intensity values extracted by \Biocpkg{illuminaio} on the horizontal axis against GenomeStudio's values on the vertical axis.  We can see they are highly similar.  However, they are not identical, as shown by the third line above.  The second plot visualizes the distribution of the differences between the two sets of values, showing them to be small.  These are most likely introduced by rounding performed by GenomeStudio that is not carried out by \Biocpkg{illuminaio}.
 
 
 

@@ -11,14 +11,14 @@ readBGX <- function(file) {
     ## read probes and then controls
     con <- gzfile(file)
     open(con)
+    on.exit({
+         close(con)
+    })
+    
     probes <- read.delim(con, sep="\t", header=TRUE, skip=probesHead, 
                        nrows=nProbes, quote="", stringsAsFactors=FALSE)
     controls <- read.delim(con, sep="\t", header=TRUE, skip = 1, 
                          nrows=nControls, quote="", stringsAsFactors=FALSE)
-    close(con)
   
-    allStuff <- list(probes = probes,
-                   controls = controls)
-  
-    return(allStuff)
+    list(probes = probes, controls = controls)
 }

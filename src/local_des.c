@@ -25,7 +25,7 @@ void decrypt(char **inFile, char **outFile) {
         fseek(f, 9, SEEK_SET);
         /* read the key for this file */
         if(fread(sessionKey, 8, 1, f) != 1) {
-            error("Error reading session key\n");
+            error("Error reading session key");
         }
 
         /* find the length of the data, minus the header */
@@ -35,7 +35,7 @@ void decrypt(char **inFile, char **outFile) {
         data = (char *)calloc(len, sizeof(char));
         memset(data, 0, len);
         if(fread(data, len, 1, f) != 1) {
-            error("Error reading IDAT data\n");
+            error("Error reading IDAT data");
         }
 
         fclose(f);
@@ -62,10 +62,10 @@ void decrypt(char **inFile, char **outFile) {
             fclose(f2);
         }
         else {
-            error("Problem opening output file\n");
+            error("Problem opening output file");
         }
     }
     else {
-        error("Problem opening input file\n");
+        error("Problem opening input file");
     }  
 }

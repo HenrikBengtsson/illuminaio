@@ -1,26 +1,25 @@
-readIDAT_enc<- function(file) {
-
+readIDAT_enc <- function(file) {
     if(!file.exists(file)) {
         stop("Unable to find file ", file)
     }
 
-    tempFile <- tempfile();
+    tempFile <- tempfile()
     
     #if(verbose) 
     #    message("Decrypting to XML")
 
-    out <- .C("decrypt", as.character(file), as.character(tempFile), PACKAGE = "illuminaio");
+    out <- .C("decrypt", as.character(file), as.character(tempFile), PACKAGE = "illuminaio")
     
     #if(verbose)
     #    message("Reading XML")
     
-    r <- readLines(tempFile, warn = FALSE); 
-    file.remove(tempFile);   
+    r <- readLines(tempFile, warn = FALSE)
+    file.remove(tempFile)   
 
     what = c(rep("numeric", 6), rep("integer", 4))
     data <- list()
     
-    tf <- tempfile(c("", ""));
+    tf <- tempfile(c("", ""))
 
     ## if we've got the XML format with lots of short lines we're
     ## going to find the lines that indicate the start of a new entry
@@ -95,16 +94,16 @@ readIDAT_enc<- function(file) {
     chipInfo <- extractChipInfo(r)
     
     res <- list(
-            Barcode=chipInfo$BarCode,
-            Section=chipInfo$SectionLabel,
-            ChipType=chipInfo$SentrixFormat,
-            Quants=as.data.frame(data),
-            RunInfo=runInfo
+             Barcode=chipInfo$BarCode,
+             Section=chipInfo$SectionLabel,
+             ChipType=chipInfo$SentrixFormat,
+             Quants=as.data.frame(data, stringsAsFactors=FALSE),
+             RunInfo=runInfo
            )
     if(!is.null(extra)) 
         res[["Extra"]] <- extra
     
-    return(res)
+    res
     
 }
 
@@ -116,7 +115,7 @@ extractRunInfo <- function(lines) {
       res <- NULL
     } else {  
       fields <- c("Name", "SoftwareApp", "Version", "Date", "Parameters")
-      res <- matrix(NA, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
+      res <- matrix(NA_character_, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
       
       for(i in 1:nrow(idx)) {
           entry <- lines[idx[i,1]:idx[i,2]]
@@ -126,16 +125,18 @@ extractRunInfo <- function(lines) {
               ## extract the string between tags
               start <- gregexpr(">", line)[[1]][1] + 1
               end <- gregexpr("<", line)[[1]][2] - 1
-              res[i, paste(f)] <- substring(line, start, end);
+              res[i, f] <- substring(line, start, end)
           }
       }
     }
-    return(res)
+    
+    res
 }
         
 extractChipInfo <- function(lines) {
     fields <- c("BarCode", "SentrixFormat", "SectionLabel")
-    res <- list();
+    res <- list()
+    
     for(f in fields) {
         line <- lines[grep(paste("<", f, ">", sep = ""), lines)]
         ## the field may not exist
@@ -148,11 +149,12 @@ extractChipInfo <- function(lines) {
         }
         ## with VeraCode data these can be empty tags, so we'll return NULL in those cases
         if(!is.na(end)) {
-          res[[ f ]] <- substring(line, start, end);
+          res[[ f ]] <- substring(line, start, end)
         } else {
           res[[ f ]] <- NULL
         }
     }
-    return(res)
+    
+    res
 }
     

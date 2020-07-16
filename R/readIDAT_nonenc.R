@@ -152,7 +152,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     ## Number of fields
     nFields <- readInt(con, n=1)
 
-    fields <- matrix(0, nrow=nFields, ncol=3)
+    fields <- matrix(0L, nrow=nFields, ncol=3)
     colnames(fields) <- c("fieldCode", "byteOffset", "Bytes")
     for (ii in 1:nFields) {
         fields[ii,"fieldCode"] <- readShort(con, n=1)
@@ -230,7 +230,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     colnames(Quants) <- c("Mean", "SD", "NBeads")
     rownames(Quants) <- as.character(res$IlluminaID)
 
-    res <- list(
+    list(
         fileSize=fileSize,
         versionNumber=version,
         nFields=nFields,
@@ -243,6 +243,5 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         ChipType=res$ChipType,
         RunInfo=res$RunInfo,
         Unknowns=Unknowns
-        )
-    res
+    )
 }

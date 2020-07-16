@@ -116,7 +116,7 @@ extractRunInfo <- function(lines) {
       res <- NULL
     } else {  
       fields <- c("Name", "SoftwareApp", "Version", "Date", "Parameters")
-      res <- matrix(NA, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
+      res <- matrix(NA_character_, ncol = length(fields), nrow = nrow(idx), dimnames = list(rep("", nrow(idx)), fields))
       
       for(i in 1:nrow(idx)) {
           entry <- lines[idx[i,1]:idx[i,2]]
@@ -126,7 +126,7 @@ extractRunInfo <- function(lines) {
               ## extract the string between tags
               start <- gregexpr(">", line)[[1]][1] + 1
               end <- gregexpr("<", line)[[1]][2] - 1
-              res[i, paste(f)] <- substring(line, start, end);
+              res[i, f] <- substring(line, start, end);
           }
       }
     }

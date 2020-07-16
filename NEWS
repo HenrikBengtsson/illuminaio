@@ -9,6 +9,8 @@ UPDATES:
    an extra newline at the end.
 
  * readIDAT() uses explicit stringsAsFactors=FALSE internally.
+
+ * readIDAT() no longer keeps two file connections open at the same.
  
 DOCUMENTATION:
 

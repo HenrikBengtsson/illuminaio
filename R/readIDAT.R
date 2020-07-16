@@ -15,7 +15,7 @@ readIDAT <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     else
         con <- file(file, "rb")
     on.exit({
-        close(con)
+        if (!is.null(con)) close(con)
     })
     what <- match.arg(what)
     
@@ -27,7 +27,10 @@ readIDAT <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     
     ## Read IDAT file format version
     version <- readBin(con, what="integer", size=4, n=1, signed = TRUE, endian = "little")
-    
+
+    close(con)
+    con <- NULL
+
     if (version == 1) {
         if(what != "all")
             stop("This file is encrypted. For encrypted files we need `what` equal to `all`.")

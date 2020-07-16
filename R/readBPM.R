@@ -21,8 +21,8 @@ readBPM <- function(file) {
     }
 
     readString <- function(con, ...) {
-      n <- readByte(con, n=1L);
-      readChar(con, nchars=n);
+      n <- readByte(con, n=1L)
+      readChar(con, nchars=n)
     }
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

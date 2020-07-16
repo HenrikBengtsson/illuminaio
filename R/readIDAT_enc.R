@@ -4,23 +4,23 @@ readIDAT_enc<- function(file) {
         stop("Unable to find file ", file)
     }
 
-    tempFile <- tempfile();
+    tempFile <- tempfile()
     
     #if(verbose) 
     #    message("Decrypting to XML")
 
-    out <- .C("decrypt", as.character(file), as.character(tempFile), PACKAGE = "illuminaio");
+    out <- .C("decrypt", as.character(file), as.character(tempFile), PACKAGE = "illuminaio")
     
     #if(verbose)
     #    message("Reading XML")
     
-    r <- readLines(tempFile, warn = FALSE); 
-    file.remove(tempFile);   
+    r <- readLines(tempFile, warn = FALSE)
+    file.remove(tempFile)   
 
     what = c(rep("numeric", 6), rep("integer", 4))
     data <- list()
     
-    tf <- tempfile(c("", ""));
+    tf <- tempfile(c("", ""))
 
     ## if we've got the XML format with lots of short lines we're
     ## going to find the lines that indicate the start of a new entry
@@ -126,7 +126,7 @@ extractRunInfo <- function(lines) {
               ## extract the string between tags
               start <- gregexpr(">", line)[[1]][1] + 1
               end <- gregexpr("<", line)[[1]][2] - 1
-              res[i, f] <- substring(line, start, end);
+              res[i, f] <- substring(line, start, end)
           }
       }
     }
@@ -135,7 +135,7 @@ extractRunInfo <- function(lines) {
         
 extractChipInfo <- function(lines) {
     fields <- c("BarCode", "SentrixFormat", "SectionLabel")
-    res <- list();
+    res <- list()
     for(f in fields) {
         line <- lines[grep(paste("<", f, ">", sep = ""), lines)]
         ## the field may not exist
@@ -148,7 +148,7 @@ extractChipInfo <- function(lines) {
         }
         ## with VeraCode data these can be empty tags, so we'll return NULL in those cases
         if(!is.na(end)) {
-          res[[ f ]] <- substring(line, start, end);
+          res[[ f ]] <- substring(line, start, end)
         } else {
           res[[ f ]] <- NULL
         }

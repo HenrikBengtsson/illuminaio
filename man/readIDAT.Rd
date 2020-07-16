@@ -20,12 +20,12 @@ readIDAT(file, what = c("all", "IlluminaID", "nSNPsRead"))
 }
 
 \details{
-  This function returns a list containing summarised intensities and other
+  This function returns a list containing summarized intensities and other
   information extracted from a single IDAT file.
 
   Thanks to Keith Baggerly for providing the first version of this code.
 
-  There are two commonly encounted versions of IDAT.  One version uses
+  There are two commonly encountered versions of IDAT.  One version uses
   encryption to store data and is the format usually produced by Illumina
   expression arrays.  The other version is unencrypted files and
   is found in data from SNP arrays and DNA methylation arrays.
@@ -33,7 +33,7 @@ readIDAT(file, what = c("all", "IlluminaID", "nSNPsRead"))
   This function is able to handle data in either format, scanning the
   file header and calling the appropriate reading routine internally.
 
-  The function supports reading gzipped, unencrypted IDATs.
+  The function supports reading gzipped, unencrypted IDAT files.
 
   The use of the \code{what} argument is for package writers.
 }
@@ -55,7 +55,7 @@ readIDAT(file, what = c("all", "IlluminaID", "nSNPsRead"))
   For both file types details of scanning and decoding dates are
   included in the \code{RunInfo} slot.
   
-  A further list entry, \code{Extra}, may also be present.  Occassionally an field
+  A further list entry, \code{Extra}, may also be present.  Occasionally an field
   in the IDAT file will have a number of data points inconsistent with the remainder
   of the file and as such is not returned in the \code{Quants} entry.  Such
   fields will be placed here.  So far only the HumanHap550 v1 BeadChip has exhibited 

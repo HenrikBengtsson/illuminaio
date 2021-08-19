@@ -45,6 +45,7 @@ jobs:
           tlmgr install ae
           tlmgr install fancyhdr
           tlmgr install enumitem
+          tlmgr install parskip
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes
@@ -96,7 +97,7 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        run: rcmdcheck::rcmdcheck(build_args = "--no-build-vignettes", args = c("--no-manual", "--no-vignettes", "--as-cran"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
       - name: Upload check results

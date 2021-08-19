@@ -50,6 +50,7 @@ jobs:
           tlmgr install preprint
           tlmgr install soul
           tlmgr install placeins
+          tlmgr install ragged2e
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes

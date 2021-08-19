@@ -44,6 +44,7 @@ jobs:
           tlmgr install titlesec
           tlmgr install ae
           tlmgr install fancyhdr
+          tlmgr install enumitem
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes

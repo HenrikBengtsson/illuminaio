@@ -91,7 +91,9 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error", check_dir = "check")
+        run: |
+          skip_vignettes <- (getRversion() < "4.0.0")
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", if (skip_vignettes) "--ignore-vignettes"), build_args = if (skip_vignettes) "--no-build-vignettes", error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
       - name: Upload check results

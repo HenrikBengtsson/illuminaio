@@ -37,8 +37,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-tinytex@v1
-      - run: tlmgr --version
-      - run: |
+      
+      - name: Install additional LaTeX packages
+        run: |
+          tlmgr --version
+          tlmgr install titlesec
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes

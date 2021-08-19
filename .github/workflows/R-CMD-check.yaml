@@ -43,6 +43,7 @@ jobs:
           tlmgr --version
           tlmgr install titlesec
           tlmgr install ae
+          tlmgr install fancyhdr
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes

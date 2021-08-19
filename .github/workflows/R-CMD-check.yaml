@@ -48,6 +48,7 @@ jobs:
           tlmgr install enumitem
           tlmgr install parskip
           tlmgr install preprint
+          tlmgr install soul
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes

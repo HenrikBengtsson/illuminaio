@@ -58,11 +58,7 @@ jobs:
           tlmgr install nowidow
           tlmgr install parnotes
           tlmgr install marginfix
-## FONTS:
-#          tlmgr install textcomp
-## PACKAGES:
           tlmgr install bibleref
-#          tlmgr install epstopdf
           tlmgr install everysel
           tlmgr install grfext
           tlmgr install hobsub
@@ -125,3 +121,8 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+## FONTS:
+#          tlmgr install textcomp
+## PACKAGES:
+#          tlmgr install epstopdf

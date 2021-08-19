@@ -53,10 +53,21 @@ jobs:
           tlmgr install ragged2e
           tlmgr install footmisc
           tlmgr install changepage
+          tlmgr install caption
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes
           tlmgr install marginfix
+## FONTS:
+#          tlmgr install textcomp
+## PACKAGES:
+          tlmgr install bibleref
+#          tlmgr install epstopdf
+          tlmgr install everysel
+          tlmgr install grfext
+          tlmgr install hobsub
+          tlmgr install mathtools
+          tlmgr install xstring
           tlmgr list --only-installed
           
       - uses: r-lib/actions/setup-r@master
@@ -114,29 +125,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-# bibleref
-# tools
-# auxhook
-# beramono
-# enumitem
-# epstopdf-base
-# etoolbox
-# everysel
-# framed
-# geometry
-# gettitlestring
-# grfext
-# hobsub-generic
-# hobsub-hyperref
-# kvoptions
-# marginfix
-# mathtools
-# mhsetup
-# keyval
-# nameref
-# rerunfilecheck
-# textcomp
-# trig
-# url
-# xstring

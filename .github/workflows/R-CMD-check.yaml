@@ -15,13 +15,13 @@ jobs:
       matrix:
         config:
 #          - {os: windows-latest, r: 'devel'   }
-#          - {os: windows-latest, r: 'release' }
+          - {os: windows-latest, r: 'release' }
 #          - {os: macOS-latest,   r: 'devel'   }
           - {os: macOS-latest,   r: 'release' }
           - {os: ubuntu-20.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-#          - {os: ubuntu-20.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-#          - {os: ubuntu-20.04,   r: '3.6',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-#          - {os: ubuntu-20.04,   r: '3.3',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - {os: ubuntu-20.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - {os: ubuntu-20.04,   r: '3.6',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - {os: ubuntu-20.04,   r: '3.3',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -41,29 +41,8 @@ jobs:
       - name: Install additional LaTeX packages
         run: |
           tlmgr --version
-          tlmgr install setspace
-          tlmgr install titlesec
-          tlmgr install ae
-          tlmgr install fancyhdr
-          tlmgr install enumitem
-          tlmgr install parskip
-          tlmgr install preprint
-          tlmgr install soul
-          tlmgr install placeins
-          tlmgr install ragged2e
-          tlmgr install footmisc
-          tlmgr install changepage
-          tlmgr install caption
-          tlmgr install bera
-          tlmgr install nowidow
-          tlmgr install parnotes
-          tlmgr install marginfix
-          tlmgr install bibleref
-          tlmgr install everysel
-          tlmgr install grfext
-          tlmgr install hobsub
-          tlmgr install mathtools
-          tlmgr install xstring
+          ## Additional LaTeX packages needed by BiocStyle:
+          tlmgr install ae bera bibleref caption changepage enumitem everysel fancyhdr footmisc grfext hobsub marginfix mathtools nowidow parnotes parskip placeins preprint ragged2e setspace soul titlesec xstring
           tlmgr list --only-installed
           
       - uses: r-lib/actions/setup-r@master
@@ -121,8 +100,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-## FONTS:
-#          tlmgr install textcomp
-## PACKAGES:
-#          tlmgr install epstopdf

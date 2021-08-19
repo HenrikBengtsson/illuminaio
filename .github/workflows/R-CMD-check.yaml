@@ -52,11 +52,13 @@ jobs:
           tlmgr install placeins
           tlmgr install ragged2e
           tlmgr install footmisc
+          tlmgr install changepage
           tlmgr install bera
           tlmgr install nowidow
           tlmgr install parnotes
           tlmgr install marginfix
-      
+          tlmgr list --only-installed
+          
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
@@ -112,3 +114,29 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+# bibleref
+# tools
+# auxhook
+# beramono
+# enumitem
+# epstopdf-base
+# etoolbox
+# everysel
+# framed
+# geometry
+# gettitlestring
+# grfext
+# hobsub-generic
+# hobsub-hyperref
+# kvoptions
+# marginfix
+# mathtools
+# mhsetup
+# keyval
+# nameref
+# rerunfilecheck
+# textcomp
+# trig
+# url
+# xstring

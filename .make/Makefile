@@ -38,8 +38,9 @@ FILES_SRC_C := $(wildcard src/*.c)
 FILES_SRC_H := $(wildcard src/*.h)
 FILES_TESTS := $(wildcard tests/*.R)
 FILES_NEWS := $(wildcard NEWS inst/NEWS)
+FILES_MISC := $(wildcard README.md)
 FILES_ROOT := DESCRIPTION NAMESPACE $(wildcard .Rbuildignore .Rinstignore)
-PKG_FILES := $(FILES_ROOT) $(FILES_NEWS) $(FILES_R) $(FILES_DATA) $(FILES_MAN) $(FILES_INST) $(FILES_VIGNETTES) $(FILES_SRC) $(FILES_TESTS)
+PKG_FILES := $(FILES_ROOT) $(FILES_NEWS) $(FILES_R) $(FILES_DATA) $(FILES_MAN) $(FILES_INST) $(FILES_VIGNETTES) $(FILES_SRC) $(FILES_TESTS) $(FILES_MISC)
 FILES_MAKEFILE := $(wildcard ../../Makefile)
 
 # Has vignettes in 'vignettes/' or 'inst/doc/'?
@@ -55,6 +56,7 @@ R_NO_INIT := --no-init-file
 R_VERSION_STATUS := $(shell $(R_SCRIPT) -e "status <- tolower(R.version[['status']]); if (regexpr('unstable', status) != -1L) status <- 'devel'; cat(status)")
 R_VERSION_X_Y := $(shell $(R_SCRIPT) -e "cat(gsub('[.][0-9]+$$', '', getRversion()))")
 R_VERSION := $(shell $(R_SCRIPT) -e "cat(as.character(getRversion()))")
+R_VERSION_3_3_OR_NEWER := $(shell $(R_SCRIPT) -e "cat(getRversion() >= '3.3.0')")
 R_VERSION_FULL := $(R_VERSION)$(R_VERSION_STATUS)
 R_LIBS_USER_X := $(shell $(R_SCRIPT) -e "cat(.libPaths()[1])")
 R_INCLUDE := $(shell $(R_SCRIPT) -e "cat(R.home('include'))")
@@ -76,6 +78,16 @@ GIT_BRANCH := $(shell $(GIT) symbolic-ref --short HEAD)
 GIT_BRANCH := $(subst /,-,$(GIT_BRANCH))
 GIT_COMMIT := $(shell $(GIT) log -1 --format="%h")
 R_LIBS_BRANCH := $(CURDIR)/.R/$(GIT_BRANCH)
+
+
+# Asserts proper Windows toolchain in R (>= 3.3.0)
+ifeq ($(OS), Windows_NT)
+ifeq ($(R_VERSION_3_3_OR_NEWER), TRUE)
+ifndef BINPREF
+$(error R (>= 3.3.0) on Windows: BINPREF not set)
+endif
+endif
+endif
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -122,6 +134,7 @@ debug:
 	@echo R_RD4PDF=\'$(R_RD4PDF)\'
 	@echo
 	@echo R_CRAN_OUTDIR=\'$(R_CRAN_OUTDIR)\'
+	@echo R_VERSION_3_3_OR_NEWER=\'$(R_VERSION_3_3_OR_NEWER)\'
 	@echo
 
 
@@ -136,6 +149,7 @@ debug_full: debug
 	@echo FILES_SRC=\'$(FILES_SRC)\'
 	@echo FILES_TESTS=\'$(FILES_TESTS)\'
 	@echo FILES_INCL=\'$(FILES_INCL)\'
+	@echo FILES_MISC=\'$(FILES_MISC)\'
 	@echo
 	@echo DIR_VIGNS=\'$(DIR_VIGNS)\'
 	@echo dirname\(DIR_VIGNS\)=\'$(shell dirname $(DIR_VIGNS))\'
@@ -250,12 +264,16 @@ check_force:
 	$(MAKE) check
 
 clang:
-	clang -c -pedantic -Wall -I$(R_HOME)/include/ src/*.c
+	clang -c -pedantic -Wall -I$(R_INCLUDE) src/*.c
+	$(RM) *.o
+
+clang-ubsan:
+	clang -fsanitize=undefined -I$(R_INCLUDE) -c src/*.c
 	$(RM) *.o
 
 valgrind_scan:
-	grep -E "^==.*==[ ]+(at|by) 0x" $(R_CHECK_OUTDIR)/tests/*.Rout | cat
-	grep "^==.* ERROR SUMMARY:" $(R_CHECK_OUTDIR)/tests/*.Rout | grep -v -F "ERROR SUMMARY: 0 errors" | cat
+	grep -E "^==.*==[ ]+(at|by) 0x" $(R_CHECK_OUTDIR)/tests*/*.Rout | cat
+	grep "^==.* ERROR SUMMARY:" $(R_CHECK_OUTDIR)/tests*/*.Rout | grep -v -F "ERROR SUMMARY: 0 errors" | cat
 
 valgrind:
 	export _R_CHECK_USE_VALGRIND_=TRUE;\
@@ -268,7 +286,7 @@ check_Rex:
 
 
 covr:
-	$(R_SCRIPT) -e "source('.covr.R'); covr::shine(covr)"
+	$(R_SCRIPT) -e "c <- covr::package_coverage(quiet = FALSE); saveRDS(c, '.covr.rds'); print(c); covr::report(c)"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,6 +337,12 @@ $(R_OUTDIR)/vigns: install
 
 vignettes: $(R_OUTDIR)/vigns
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Static code validation etc
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+lint:
+	$(R_SCRIPT) -e "library(lintr); lint_package(linters = with_defaults(commented_code_linter = NULL, closed_curly_linter = closed_curly_linter(allow_single_line = TRUE), open_curly_linter = open_curly_linter(allow_single_line = TRUE)))"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Run package tests
@@ -436,8 +460,8 @@ Makefile: $(FILES_MAKEFILE)
 .make/appveyor.yml.rsp:
 	$(R_SCRIPT) -e "R.utils::downloadFile('https://raw.githubusercontent.com/HenrikBengtsson/r-package-files/master/.make/appveyor.yml.rsp', path='.make/')"
 
-.make/README.md.rsp:
-	$(R_SCRIPT) -e "R.utils::downloadFile('https://raw.githubusercontent.com/HenrikBengtsson/r-package-files/master/.make/README.md.rsp', path='.make/')"
+.make/%.md.rsp:
+	$(R_SCRIPT) -e "R.utils::downloadFile('https://raw.githubusercontent.com/HenrikBengtsson/r-package-files/master/$@', path='.make/')"
 
 .covr.R:
 	$(R_SCRIPT) -e "R.utils::downloadFile('https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/.covr.R')"
@@ -460,6 +484,9 @@ refresh: clean
 README.md: .make/README.md.rsp
 	$(R_SCRIPT) -e "R.rsp::rfile('$<', postprocess=FALSE)"
 
+CONTRIBUTING.md: .make/CONTRIBUTING.md.rsp
+	$(R_SCRIPT) -e "R.rsp::rfile('$<', postprocess=FALSE)"
+
 .travis.yml: .make/.travis.yml.rsp
 	$(R_SCRIPT) -e "R.rsp::rfile('$<', postprocess=FALSE)"
 
@@ -467,3 +494,10 @@ appveyor.yml: .make/appveyor.yml.rsp
 	$(R_SCRIPT) -e "R.rsp::rfile('$<', postprocess=FALSE)"
 
 config: .travis.yml appveyor.yml README.md
+
+## Include any other Makefile.*, if they exists
+INCLUDES := $(wildcard .make/Makefile.*)
+ifneq ($(strip $(INCLUDES)),)
+  include $(INCLUDES)
+endif
+

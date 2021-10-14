@@ -1,5 +1,5 @@
 readBPM <- function(file) {
-    .Deprecated(msg="readBPM() is deprecated since illuminaio 0.1.4 (January 2016), because its parser in invalid and broken. (Issue #6)")
+    .Deprecated(msg="readBPM() is deprecated since illuminaio 0.1.4 (January 2016), because its parser is invalid and broken. (Issue #6)")
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Local functions

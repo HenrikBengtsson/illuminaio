@@ -72,7 +72,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         }
 
         ## Now read all bytes/characters
-        suppressWarnings(readChar(con, nchars=n))
+        readChar(con, nchars=n)
     }
 
     readField <- function(con, field) {
@@ -213,7 +213,10 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     res <- lapply(res, function(xx) {
         where <- fields[xx, "byteOffset"]
         seek(con, where = where, origin = "start")
-        readField(con = con, field = xx)
+        if(xx == "Unknown.6")
+            suppressWarnings(readField(con = con, field = xx))
+        else
+            readField(con = con, field = xx)
     })
 
     Unknowns <-

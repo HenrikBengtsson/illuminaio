@@ -72,7 +72,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         }
 
         ## Now read all bytes/characters
-        readChar(con, nchars=n)
+        suppressWarnings(readChar(con, nchars=n))
     }
 
     readField <- function(con, field) {

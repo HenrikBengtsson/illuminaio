@@ -15,6 +15,23 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         readBin(con, what="integer", n=n, size=8, endian="little", signed=TRUE)
     }
 
+    readBytesToRead <- function(con, ...) {
+      m <- readByte(con, n=1)
+      n <- m %% 128
+      shift <- 0L
+      while (m %/% 128 == 1) {
+          ## Read next length byte ...
+          m <- readByte(con, n=1)
+         ## ... which represents the next 7 hi-bits
+          shift <- shift + 7L
+          k <- (m %% 128) * 2^shift
+         ## Total number of bytes to read
+          n <- n + k
+      }
+
+      n
+    }
+
     readString <- function(con, ...) {
         ## From [1] https://code.google.com/p/glu-genetics/source/browse/glu/lib/illumina.py#86:
         ## String data are encoded as a sequence of one or more length
@@ -55,23 +72,9 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         ##                                              -> n=1+81920=81921
 
         ## Parse the number of characters to read
-        m <- readByte(con, n=1)
-        n <- m %% 128
+        n <- readBytesToRead(con)
 
-        shift <- 0L
-        while (m %/% 128 == 1) {
-            ## Read next length byte ...
-            m <- readByte(con, n=1)
-
-            ## ... which represents the next 7 hi-bits
-            shift <- shift + 7L
-            k <- (m %% 128) * 2^shift
-
-            ## Total number of bytes to read
-            n <- n + k
-        }
-
-        ## Now read all bytes/characters
+        ## Read the data bytes
         readChar(con, nchars=n)
     }
 

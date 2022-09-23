@@ -222,15 +222,12 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
             readField(con = con, field = xx)
     })
 
-    Unknowns <-
-        list(MostlyNull=res$MostlyNull,
-             MostlyA=res$MostlyA,
-             Unknown.1=res$Unknown.1,
-             Unknown.2=res$Unknown.2,
-             Unknown.3=res$Unknown.3,
-             Unknown.4=res$Unknown.4,
-             Unknown.5=res$Unknown.5
-             )
+    Unknowns <- list(
+      MostlyNull=res$MostlyNull,
+      MostlyA=res$MostlyA
+    )
+    names <- grep("^Unknown[.]", names(res), value = TRUE)
+    Unknowns[names] <- res[names]
 
     Quants <- cbind(res$Mean, res$SD, res$NBeads)
     colnames(Quants) <- c("Mean", "SD", "NBeads")

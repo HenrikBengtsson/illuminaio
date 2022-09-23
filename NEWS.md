@@ -1,6 +1,9 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
+
+ * `readIDAT()` would only return the first five 'Unknown.N' fields.
+   Additional ones would be dropped.
  
 
 # Version 0.39.0 [2022-04-26]

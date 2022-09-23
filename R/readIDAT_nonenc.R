@@ -15,6 +15,24 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         readBin(con, what="integer", n=n, size=8, endian="little", signed=TRUE)
     }
 
+    readBytesToRead <- function(con, ...) {
+        m <- readByte(con, n=1)
+        n <- m %% 128
+        shift <- 0L
+        while (m %/% 128 == 1) {
+            ## Read next length byte ...
+            m <- readByte(con, n=1)
+            ## ... which represents the next 7 hi-bits
+            shift <- shift + 7L
+            k <- (m %% 128) * 2^shift
+            ## Total number of bytes to read
+            n <- n + k
+        }
+
+        ## 'n' is a numeric; not an integer
+        n
+    }
+
     readString <- function(con, ...) {
         ## From [1] https://code.google.com/p/glu-genetics/source/browse/glu/lib/illumina.py#86:
         ## String data are encoded as a sequence of one or more length
@@ -55,24 +73,18 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         ##                                              -> n=1+81920=81921
 
         ## Parse the number of characters to read
-        m <- readByte(con, n=1)
-        n <- m %% 128
+        n <- readBytesToRead(con)
 
-        shift <- 0L
-        while (m %/% 128 == 1) {
-            ## Read next length byte ...
-            m <- readByte(con, n=1)
-
-            ## ... which represents the next 7 hi-bits
-            shift <- shift + 7L
-            k <- (m %% 128) * 2^shift
-
-            ## Total number of bytes to read
-            n <- n + k
-        }
-
-        ## Now read all bytes/characters
+        ## Read the data bytes
         readChar(con, nchars=n)
+    }
+
+    readUnknownBytes <- function(con, ...) {
+        ## Parse the number of characters to read
+        n <- readBytesToRead(con)
+        
+        ## Read the data bytes
+        c(as.integer(n), readByte(con, n = n))
     }
 
     readField <- function(con, field) {
@@ -95,7 +107,17 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
                "Unknown.3" = readString(con = con),
                "Unknown.4" = readString(con = con),
                "Unknown.5" = readString(con = con),
-               "Unknown.6" = readString(con = con),
+               ## We don't know what 'Unknown.6' should be, but we know of at
+               ## least one instance [2] where using readString() would trigger
+               ## a warning about nulls in the string stemming from the byte
+               ## sequence (1, 0). Because of this, we choose to read it as
+               ## a byte sequence based of readUnknownBytes(), because it's
+               ## the closest to readString() which we have used for years.
+               ## We might change how this field is parsed in a future version
+               ## when better understood what this field contains, e.g.
+               ## it could be that readShort() should be used. /HB 2022-09-23
+               ## [2] https://github.com/HenrikBengtsson/illuminaio/issues/21
+               "Unknown.6" = readUnknownBytes(con = con),
                "Unknown.7" = readString(con = con),
                "RunInfo" = {
                    nRunInfoBlocks <- readInt(con = con, n=1)
@@ -159,6 +181,9 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         fields[ii,"byteOffset"] <- readLong(con, n=1)
     }
 
+    ## The below stems from [1].  However, there is now also [3], which seems to
+    ## have identified a few more of the 'Unknowns' fields. /HB 2022-09-23
+    ## [3] https://github.com/bioinformed/glu-genetics/blob/dcbbbf67a308d35e157b20a9c76373530510379a/glu/lib/illumina.py#L44-L61
     knownCodes <- c(
         "nSNPsRead"  = 1000,
         "IlluminaID" =  102,
@@ -168,17 +193,17 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         "MidBlock"   =  200,
         "RunInfo"    =  300,
         "RedGreen"   =  400,
-        "MostlyNull" =  401, # 'Manifest', cf [1].
+        "MostlyNull" =  401, # 'Manifest' [1,2]
         "Barcode"    =  402,
         "ChipType"   =  403,
-        "MostlyA"    =  404, # 'Stripe', cf [1].
-        "Unknown.1"  =  405,
-        "Unknown.2"  =  406, # 'Sample ID', cf [1].
-        "Unknown.3"  =  407,
-        "Unknown.4"  =  408, # 'Plate', cf [1].
-        "Unknown.5"  =  409, # 'Well', cf [1].
-        "Unknown.6"  =  410,
-        "Unknown.7"  =  510
+        "MostlyA"    =  404, # 'Stripe' [1], 'label' [2]
+        "Unknown.1"  =  405, # 'opa' [2]
+        "Unknown.2"  =  406, # 'Sample ID' [1,2]
+        "Unknown.3"  =  407, # 'descr' [2]
+        "Unknown.4"  =  408, # 'Plate' [1,2]
+        "Unknown.5"  =  409, # 'Well' [1,2]
+        "Unknown.6"  =  410, 
+        "Unknown.7"  =  510  # 'unknown' [1,2]
         )
 
     nNewFields <- 1
@@ -216,15 +241,12 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         readField(con = con, field = xx)
     })
 
-    Unknowns <-
-        list(MostlyNull=res$MostlyNull,
-             MostlyA=res$MostlyA,
-             Unknown.1=res$Unknown.1,
-             Unknown.2=res$Unknown.2,
-             Unknown.3=res$Unknown.3,
-             Unknown.4=res$Unknown.4,
-             Unknown.5=res$Unknown.5
-             )
+    Unknowns <- list(
+      MostlyNull=res$MostlyNull,
+      MostlyA=res$MostlyA
+    )
+    names <- grep("^Unknown[.]", names(res), value = TRUE)
+    Unknowns[names] <- res[names]
 
     Quants <- cbind(res$Mean, res$SD, res$NBeads)
     colnames(Quants) <- c("Mean", "SD", "NBeads")

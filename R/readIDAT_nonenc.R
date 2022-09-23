@@ -78,6 +78,14 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         readChar(con, nchars=n)
     }
 
+    readUnknown <- function(con, ...) {
+        ## Parse the number of characters to read
+        n <- readBytesToRead(con)
+
+        ## Read the data bytes
+        readBin(con, what = "raw", n = n)
+    }
+
     readField <- function(con, field) {
         switch(field,
                "IlluminaID" = readInt(con = con, n=nSNPsRead),
@@ -98,7 +106,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
                "Unknown.3" = readString(con = con),
                "Unknown.4" = readString(con = con),
                "Unknown.5" = readString(con = con),
-               "Unknown.6" = readString(con = con),
+               "Unknown.6" = readUnknown(con = con),
                "Unknown.7" = readString(con = con),
                "RunInfo" = {
                    nRunInfoBlocks <- readInt(con = con, n=1)
@@ -216,10 +224,7 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     res <- lapply(res, function(xx) {
         where <- fields[xx, "byteOffset"]
         seek(con, where = where, origin = "start")
-        if(xx == "Unknown.6")
-            suppressWarnings(readField(con = con, field = xx))
-        else
-            readField(con = con, field = xx)
+        readField(con = con, field = xx)
     })
 
     Unknowns <- list(

@@ -7,7 +7,7 @@ idat <- illuminaio::readIDAT(idatFile)
 
 ## WORKAROUND: Until 'IlluminaDataTestFiles' is updated, 
 ## don't test all of the "Unknowns" fields
-if (packageVersion("illuminaio") >= "0.39.0-9004" &&
+if (packageVersion("illuminaio") >= "0.39.0-9003" &&
     packageVersion("IlluminaDataTestFiles") <= "1.34.0") {
   unknowns <- idat[["Unknowns"]]
   unknowns[["Unknown.6"]] <- NULL

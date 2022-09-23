@@ -66,8 +66,8 @@
 
 ## Bug Fixes
 
- * `readBGX()` would leave an open connection if there was an file
-   reading error.
+ * `readBGX()` would leave an open connection if there was a
+   file-reading error.
  
 
 # Version 0.31.0 [2020-04-27]

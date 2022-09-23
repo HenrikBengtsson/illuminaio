@@ -28,7 +28,8 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
             ## Total number of bytes to read
             n <- n + k
         }
-  
+
+        ## 'n' is a numeric; not an integer
         n
     }
 
@@ -78,12 +79,12 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         readChar(con, nchars=n)
     }
 
-    readUnknown <- function(con, ...) {
+    readUnknownBytes <- function(con, ...) {
         ## Parse the number of characters to read
         n <- readBytesToRead(con)
-
+        
         ## Read the data bytes
-        readBin(con, what = "raw", n = n)
+        c(as.integer(n), readByte(con, n = n))
     }
 
     readField <- function(con, field) {
@@ -106,7 +107,17 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
                "Unknown.3" = readString(con = con),
                "Unknown.4" = readString(con = con),
                "Unknown.5" = readString(con = con),
-               "Unknown.6" = readUnknown(con = con),
+               ## We don't know what 'Unknown.6' should be, but we know of at
+               ## least one instance [2] where using readString() would trigger
+               ## a warning about nulls in the string stemming from the byte
+               ## sequence (1, 0). Because of this, we choose to read it as
+               ## a byte sequence based of readUnknownBytes(), because it's
+               ## the closest to readString() which we have used for years.
+               ## We might change how this field is parsed in a future version
+               ## when better understood what this field contains, e.g.
+               ## it could be that readShort() should be used. /HB 2022-09-23
+               ## [2] https://github.com/HenrikBengtsson/illuminaio/issues/21
+               "Unknown.6" = readUnknownBytes(con = con),
                "Unknown.7" = readString(con = con),
                "RunInfo" = {
                    nRunInfoBlocks <- readInt(con = con, n=1)
@@ -170,6 +181,9 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         fields[ii,"byteOffset"] <- readLong(con, n=1)
     }
 
+    ## The below stems from [1].  However, there is now also [3], which seems to
+    ## have identified a few more of the 'Unknowns' fields. /HB 2022-09-23
+    ## [3] https://github.com/bioinformed/glu-genetics/blob/dcbbbf67a308d35e157b20a9c76373530510379a/glu/lib/illumina.py#L44-L61
     knownCodes <- c(
         "nSNPsRead"  = 1000,
         "IlluminaID" =  102,
@@ -179,17 +193,17 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         "MidBlock"   =  200,
         "RunInfo"    =  300,
         "RedGreen"   =  400,
-        "MostlyNull" =  401, # 'Manifest', cf [1].
+        "MostlyNull" =  401, # 'Manifest' [1,2]
         "Barcode"    =  402,
         "ChipType"   =  403,
-        "MostlyA"    =  404, # 'Stripe', cf [1].
-        "Unknown.1"  =  405,
-        "Unknown.2"  =  406, # 'Sample ID', cf [1].
-        "Unknown.3"  =  407,
-        "Unknown.4"  =  408, # 'Plate', cf [1].
-        "Unknown.5"  =  409, # 'Well', cf [1].
-        "Unknown.6"  =  410,
-        "Unknown.7"  =  510
+        "MostlyA"    =  404, # 'Stripe' [1], 'label' [2]
+        "Unknown.1"  =  405, # 'opa' [2]
+        "Unknown.2"  =  406, # 'Sample ID' [1,2]
+        "Unknown.3"  =  407, # 'descr' [2]
+        "Unknown.4"  =  408, # 'Plate' [1,2]
+        "Unknown.5"  =  409, # 'Well' [1,2]
+        "Unknown.6"  =  410, 
+        "Unknown.7"  =  510  # 'unknown' [1,2]
         )
 
     nNewFields <- 1

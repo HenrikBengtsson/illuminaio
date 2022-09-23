@@ -16,20 +16,20 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
     }
 
     readBytesToRead <- function(con, ...) {
-      m <- readByte(con, n=1)
-      n <- m %% 128
-      shift <- 0L
-      while (m %/% 128 == 1) {
-          ## Read next length byte ...
-          m <- readByte(con, n=1)
-         ## ... which represents the next 7 hi-bits
-          shift <- shift + 7L
-          k <- (m %% 128) * 2^shift
-         ## Total number of bytes to read
-          n <- n + k
-      }
-
-      n
+        m <- readByte(con, n=1)
+        n <- m %% 128
+        shift <- 0L
+        while (m %/% 128 == 1) {
+            ## Read next length byte ...
+            m <- readByte(con, n=1)
+            ## ... which represents the next 7 hi-bits
+            shift <- shift + 7L
+            k <- (m %% 128) * 2^shift
+            ## Total number of bytes to read
+            n <- n + k
+        }
+  
+        n
     }
 
     readString <- function(con, ...) {

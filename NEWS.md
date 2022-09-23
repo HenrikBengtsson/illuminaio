@@ -2,8 +2,14 @@
 
 ## Bug Fixes
 
- * `readIDAT()` would only return the first five 'Unknown.N' fields.
+ * `readIDAT()` would only return the first five `Unknown.N` fields.
    Additional ones would be dropped.
+
+ * `readIDAT()` could produce `Warning message: In readChar(con,
+   nchars = n) : truncating string with embedded nuls` if the IDAT
+   file had an `Unknown.6` field.  Until we know what that field
+   represents, it is parsed as an `(nbytes, <byte sequence>)` integer
+   vector.
  
 
 # Version 0.39.0 [2022-04-26]

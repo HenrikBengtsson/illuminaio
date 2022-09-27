@@ -36,13 +36,13 @@
    which is now BioC 3.14 for R (>= 4.1.1).
 
 
-# Version 3.24.0 [2021-05-19]
+# Version 0.34.0 [2021-05-19]
 
  * The version number was bumped for the Bioconductor release version,
    which is now BioC 3.13 for R (>= 4.0.3).
 
 
-# Version 3.22.0 [2020-10-27]
+# Version 0.32.0 [2020-10-27]
 
  * The version number was bumped for the Bioconductor release version,
    which is now BioC 3.12 for R (>= 4.0.0).
@@ -337,14 +337,16 @@ CODE REFACTORING:
    is always forward based.
 
 
-# Version 0.5.0 [2013-10-14; BioC 2.14]
+# Version 0.5.0 [2013-10-14]
 
- * The version number was bumped for the Bioconductor devel version.
+ * The version number was bumped for the Bioconductor devel version
+   2.14.
 
 
-# Version 0.4.0 [2013-10-14; BioC 2.13]
+# Version 0.4.0 [2013-10-14]
 
- * The version number was bumped for the Bioconductor release version.
+ * The version number was bumped for the Bioconductor release version
+   2.13.
 
 
 # Version 0.3.9 [2013-09-13]
@@ -383,14 +385,16 @@ CODE REFACTORING:
    will _not_ be performed on the Bioconductor servers.
 
 
-# Version 0.3.0 [2013-04-03; BioC 2.13]
+# Version 0.3.0 [2013-04-03]
 
- * The version number was bumped for the Bioconductor devel version.
+ * The version number was bumped for the Bioconductor devel version
+   2.13.
 
 
-# Version 0.2.0 [2013-04-03; BioC 2.12]
+# Version 0.2.0 [2013-04-03]
 
- * The version number was bumped for the Bioconductor release version.
+ * The version number was bumped for the Bioconductor release version
+   2.12.
 
 
 # Version 0.1.5 [2012-11-28]

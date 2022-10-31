@@ -1,6 +1,8 @@
 # Version (development version)
 
- * ...
+## Miscellaneous
+
+ * Fix `NEWS.md` version formatting.
  
 
 # Version 0.39.1 [2022-09-23]

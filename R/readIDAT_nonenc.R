@@ -193,17 +193,17 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
         "MidBlock"   =  200,
         "RunInfo"    =  300,
         "RedGreen"   =  400,
-        "MostlyNull" =  401, # 'Manifest' [1,2]
+        "MostlyNull" =  401, # 'Manifest' [1,3]
         "Barcode"    =  402,
         "ChipType"   =  403,
-        "MostlyA"    =  404, # 'Stripe' [1], 'label' [2]
-        "Unknown.1"  =  405, # 'opa' [2]
-        "Unknown.2"  =  406, # 'Sample ID' [1,2]
-        "Unknown.3"  =  407, # 'descr' [2]
-        "Unknown.4"  =  408, # 'Plate' [1,2]
-        "Unknown.5"  =  409, # 'Well' [1,2]
+        "MostlyA"    =  404, # 'Stripe' [1], 'label' [3]
+        "Unknown.1"  =  405, # 'opa' [3]
+        "Unknown.2"  =  406, # 'Sample ID' [1,3]
+        "Unknown.3"  =  407, # 'descr' [3]
+        "Unknown.4"  =  408, # 'Plate' [1,3]
+        "Unknown.5"  =  409, # 'Well' [1,3]
         "Unknown.6"  =  410, 
-        "Unknown.7"  =  510  # 'unknown' [1,2]
+        "Unknown.7"  =  510  # 'unknown' [1,3]
         )
 
     nNewFields <- 1

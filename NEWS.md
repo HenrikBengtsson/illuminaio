@@ -1,3 +1,9 @@
+# Version 0.41.0 [2022-11-01]
+
+ * The version number was bumped for the Bioconductor devel version,
+   which is now Bioconductor 3.17 for R-devel.
+
+
 # Version 0.40.0 [2022-11-01]
 
  * The version number was bumped for the Bioconductor release version,

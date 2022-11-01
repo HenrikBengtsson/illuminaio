@@ -1,3 +1,9 @@
+# Version 0.40.0 [2022-11-01]
+
+ * The version number was bumped for the Bioconductor release version,
+   which is now Bioconductor 3.16 for R (>= 4.2.2).
+   
+
 # Version 0.39.2 [2022-10-31]
 
 ## Miscellaneous
@@ -22,37 +28,37 @@
 # Version 0.39.0 [2022-04-26]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC 3.16 for R-devel.
+   which is now Bioconductor 3.16 for R-devel.
 
 
 # Version 0.38.0 [2022-04-26]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.15 for R (>= 4.2.0).
+   which is now Bioconductor 3.15 for R (>= 4.2.0).
 
 
 # Version 0.37.0 [2021-10-27]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC 3.15 for R-devel.
+   which is now Bioconductor 3.15 for R-devel.
 
 
 # Version 0.36.0 [2021-10-27]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.14 for R (>= 4.1.1).
+   which is now Bioconductor 3.14 for R (>= 4.1.1).
 
 
 # Version 0.34.0 [2021-05-19]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.13 for R (>= 4.0.3).
+   which is now Bioconductor 3.13 for R (>= 4.0.3).
 
 
 # Version 0.32.0 [2020-10-27]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.12 for R (>= 4.0.0).
+   which is now Bioconductor 3.12 for R (>= 4.0.0).
 
 
 # Version 0.31.1 [2020-07-15]
@@ -80,19 +86,19 @@
 # Version 0.31.0 [2020-04-27]
 
  * The version number was bumped for the Bioconductor develop version,
-   which is now BioC 3.12 for R (>= 4.0.0).
+   which is now Bioconductor 3.12 for R (>= 4.0.0).
 
 
 # Version 0.30.0 [2020-04-27]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.11 for R (>= 4.0.0).
+   which is now Bioconductor 3.11 for R (>= 4.0.0).
 
 
 # Version 0.28.0 [2019-10-29]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.10 for R (>= 3.6.1).
+   which is now Bioconductor 3.10 for R (>= 3.6.1).
 
 
 # Version 0.27.1 [2019-08-19]
@@ -105,25 +111,25 @@
 # Version 0.27.0 [2019-05-02]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC 3.10 for R (>= 3.6.0).
+   which is now Bioconductor 3.10 for R (>= 3.6.0).
 
 
 # Version 0.26.0 [2019-05-02]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.9 for R (>= 3.6.0).
+   which is now Bioconductor 3.9 for R (>= 3.6.0).
 
 
 # Version 0.25.0 [2018-10-30]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC 3.9 for R (>= 3.6.0).
+   which is now Bioconductor 3.9 for R (>= 3.6.0).
 
 
 # Version 0.24.0 [2018-10-30]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC 3.8 for R (>= 3.5.1).
+   which is now Bioconductor 3.8 for R (>= 3.5.1).
 
 
 # Version 0.23.2 [2018-07-18]
@@ -147,49 +153,49 @@
 # Version 0.23.0 [2018-05-01]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.8 for R (>= 3.5.0).
+   which is now Bioconductor 3.8 for R (>= 3.5.0).
 
 
 # Version 0.22.0 [2017-05-01]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.7 for R (>= 3.5.0).
+   which is now Bioconductor 3.7 for R (>= 3.5.0).
 
 
 # Version 0.21.0 [2017-10-31]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.7 for R (>= 3.5.0).
+   which is now Bioconductor 3.7 for R (>= 3.5.0).
 
 
 # Version 0.20.0 [2017-10-31]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.6 for R (>= 3.4.0).
+   which is now Bioconductor 3.6 for R (>= 3.4.0).
 
 
 # Version 0.19.0 [2017-04-25]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.6 for R (>= 3.4.0).
+   which is now Bioconductor 3.6 for R (>= 3.4.0).
 
 
 # Version 0.18.0 [2017-04-25]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.5 for R (>= 3.4.0).
+   which is now Bioconductor 3.5 for R (>= 3.4.0).
 
 
 # Version 0.17.0 [2016-10-18]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.5 for R (>= 3.4.0).
+   which is now Bioconductor 3.5 for R (>= 3.4.0).
 
 
 # Version 0.16.0 [2016-10-18]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.4 for R (>= 3.3.1).
+   which is now Bioconductor 3.4 for R (>= 3.3.1).
 
 
 # Version 0.15.1 [2016-08-27]
@@ -202,13 +208,13 @@
 # Version 0.15.0 [2015-05-03]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.4 for R (>= 3.3.0).
+   which is now Bioconductor 3.4 for R (>= 3.3.0).
 
 
 # Version 0.14.0 [2015-05-03]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.3 for R (>= 3.3.0).
+   which is now Bioconductor 3.3 for R (>= 3.3.0).
 
 
 # Version 0.13.1 [2016-01-12]
@@ -222,13 +228,13 @@
 # Version 0.13.0 [2015-10-23]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.3 for R (>= 3.3.0).
+   which is now Bioconductor 3.3 for R (>= 3.3.0).
 
 
 # Version 0.12.0 [2015-10-13]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.2 for R (>= 3.2.2).
+   which is now Bioconductor 3.2 for R (>= 3.2.2).
 
 
 # Version 0.11.2 [2015-09-11]
@@ -252,13 +258,13 @@
 # Version 0.11.0 [2015-04-16]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.2 for R (>= 3.3.0).
+   which is now Bioconductor 3.2 for R (>= 3.3.0).
 
 
 # Version 0.10.0 [2015-04-16]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.1 for R (>= 3.2.0).
+   which is now Bioconductor 3.1 for R (>= 3.2.0).
 
 
 # Version 0.9.1 [2015-02-25]
@@ -272,13 +278,13 @@
 # Version 0.9.0 [2014-10-13]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v3.1 for R (>= 3.2.0).
+   which is now Bioconductor 3.1 for R (>= 3.2.0).
 
 
 # Version 0.8.0 [2014-10-13]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v3.0 for R (>= 3.1.1).
+   which is now Bioconductor 3.0 for R (>= 3.1.1).
 
 
 # Version 0.7.2 [2014-10-02]
@@ -303,13 +309,13 @@
 # Version 0.7.0 [2014-04-11]
 
  * The version number was bumped for the Bioconductor devel version,
-   which is now BioC v2.15 for R (>= 3.1.0).
+   which is now Bioconductor 2.15 for R (>= 3.1.0).
 
 
 # Version 0.6.0 [2014-04-11]
 
  * The version number was bumped for the Bioconductor release version,
-   which is now BioC v2.14 for R (>= 3.1.0).
+   which is now Bioconductor 2.14 for R (>= 3.1.0).
  
 
 # Version 0.5.6 [2014-03-10]

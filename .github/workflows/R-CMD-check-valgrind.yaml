@@ -8,16 +8,17 @@ jobs:
 
     timeout-minutes: 30
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
-    name: ubuntu-20.04 (release) w/ valgrind
+    name: ubuntu-22.04 (release) w/ valgrind
 
     strategy:
       fail-fast: false
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
+      RSPM: https://packagemanager.rstudio.com/cran/__linux__/jammy/latest
+      R_KEEP_PKG_SOURCE: yes
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       ## R CMD check
       _R_CHECK_CRAN_INCOMING_: false
@@ -26,9 +27,10 @@ jobs:
       _R_CHECK_MATRIX_DATA_: true
       ## Specific to package
       _R_CHECK_USE_VALGRIND_: true
+      RCMDCHECK_ERROR_ON: warning
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -73,7 +75,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Check with valgrind
-        run: rcmdcheck::rcmdcheck(build_args = "--no-build-vignettes", args = c("--use-valgrind", "--no-codoc", "--no-examples", "--no-manual", "--ignore-vignettes"), error_on = "warning", check_dir = "check")
+        run: rcmdcheck::rcmdcheck(build_args = "--no-build-vignettes", args = c("--use-valgrind", "--no-codoc", "--no-examples", "--no-manual", "--ignore-vignettes"), check_dir = "check")
         shell: Rscript {0}
         
       - name: Upload check results

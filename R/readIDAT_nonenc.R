@@ -120,7 +120,8 @@ readIDAT_nonenc <- function(file, what = c("all", "IlluminaID", "nSNPsRead")) {
                "Unknown.6" = readUnknownBytes(con = con),
                "Unknown.7" = readString(con = con),
                "RunInfo" = {
-                   nRunInfoBlocks <- readInt(con = con, n=1)
+                   ## make sure it's >= 0.
+                   nRunInfoBlocks <- max(0,readInt(con = con, n=1))
                    naValue <- as.character(NA)
                    RunInfo <- matrix(naValue, nrow=nRunInfoBlocks, ncol=5)
                    colnames(RunInfo) <- c("RunTime", "BlockType", "BlockPars",
